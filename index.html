@@ -4,31 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Live Gate QR Scanner</title>
-  <!-- Fast, Continuous Video Barcode Engine -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <style>
     * { box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 14px; background: #0b0f19; color: #f8fafc; }
     .card { background: #1e293b; border-radius: 14px; padding: 16px; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
     h2 { margin: 0 0 12px; font-size: 18px; color: #38bdf8; }
-    
-    /* Viewfinder container */
     #reader { width: 100%; border-radius: 12px; overflow: hidden; background: #000; border: 2px solid #334155; }
-    
     .btn { display: block; width: 100%; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; margin-top: 10px; }
     .btn-green { background: #16a34a; color: white; }
     .btn-blue { background: #2563eb; color: white; }
     .btn-gray { background: #475569; color: white; }
-    
     .status-overlay { display: none; padding: 16px; border-radius: 10px; margin-top: 14px; }
     .status-success { background: #064e3b; border: 1px solid #059669; color: #d1fae5; }
     .status-error { background: #7f1d1d; border: 1px solid #dc2626; color: #fee2e2; }
-    .details { text-align: left; background: #0f172a; padding: 12px; border-radius: 8px; margin: 10px 0; font-size: 15px; }
-    .details div { margin-bottom: 6px; }
-    .badge { font-weight: bold; font-size: 20px; color: #38bdf8; }
-    
+    .details { text-align: left; background: #0f172a; padding: 14px; border-radius: 8px; margin: 10px 0; font-size: 15px; }
+    .details div { margin-bottom: 8px; }
+    .quota-badge { font-size: 22px; font-weight: bold; color: #38bdf8; }
     .manual-box { display: flex; gap: 8px; margin-top: 12px; }
     .manual-box input { flex: 1; padding: 12px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; font-size: 16px; text-transform: uppercase; }
+
+    /* Quantity Selector for Partial Check-in */
+    .stepper-container { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 14px 0; }
+    .step-btn { width: 44px; height: 44px; background: #334155; color: white; font-size: 22px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; }
+    .step-input { width: 70px; height: 44px; text-align: center; font-size: 20px; font-weight: bold; background: #0f172a; color: #38bdf8; border: 1px solid #475569; border-radius: 8px; }
   </style>
 </head>
 <body>
@@ -36,7 +35,7 @@
   <div class="card">
     <h2>🍽️ Durga Puja Lunch Check-In</h2>
     
-    <!-- Live Continuous Video Viewfinder -->
+    <!-- Live Continuous Viewfinder -->
     <div id="reader"></div>
     
     <div class="manual-box">
@@ -50,27 +49,21 @@
   <script>
     // ==========================================
     // PASTE YOUR APPS SCRIPT /exec URL HERE:
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDpimD8ThcTlLfP-PzwSGTO1xw6fSoJqlTGhNT8wPKkD3Lszz67C1uELuZQc1I2VNt/exec"; 
+    const SCRIPT_URL = "YOUR_APPS_SCRIPT_EXEC_URL"; 
     // ==========================================
 
     let html5QrCode;
     let isProcessing = false;
+    let currentTicketData = null;
 
-    // Initialize continuous camera on load
     window.addEventListener("DOMContentLoaded", () => {
       startContinuousScanner();
     });
 
     function startContinuousScanner() {
       html5QrCode = new Html5Qrcode("reader");
+      const config = { fps: 15, qrbox: { width: 230, height: 230 }, aspectRatio: 1.0 };
 
-      const config = {
-        fps: 15, // Scans 15 frames per second continuously
-        qrbox: { width: 230, height: 230 },
-        aspectRatio: 1.0
-      };
-
-      // Automatically starts rear camera video stream
       html5QrCode.start(
         { facingMode: "environment" },
         config,
@@ -78,22 +71,16 @@
       ).catch(err => {
         document.getElementById("reader").innerHTML = `
           <div style="padding: 16px; color: #f87171; font-size: 14px;">
-            ⚠️ Camera Access Blocked: ${err.message || err}<br><br>
-            Please allow camera permissions in browser settings.
+            ⚠️ Camera Access Blocked: ${err.message || err}
           </div>`;
       });
     }
 
-    // Triggered the instant a QR appears in the camera frame
     function onLiveScanSuccess(decodedText) {
-      if (isProcessing) return; // Prevent double-triggering while API responds
+      if (isProcessing) return;
       isProcessing = true;
-
-      // Optional: Vibrate phone on successful QR detection like UPI apps
       if (navigator.vibrate) navigator.vibrate(100);
-
-      // Pause continuous stream while showing confirmation card
-      html5QrCode.pause();
+      if (html5QrCode && html5QrCode.isScanning) html5QrCode.pause();
       queryBackend("verify", { query: decodedText.trim() });
     }
 
@@ -110,7 +97,7 @@
       const resBox = document.getElementById("resultBox");
       resBox.style.display = "block";
       resBox.className = "status-overlay status-success";
-      resBox.innerHTML = "⏳ Contacting society database...";
+      resBox.innerHTML = "⏳ Communicating with database...";
 
       fetch(SCRIPT_URL, {
         method: "POST",
@@ -136,55 +123,109 @@
         resBox.className = "status-overlay status-error";
         resBox.innerHTML = `
           <h3>❌ Not Found</h3>
-          <p>Code / Flat: <strong>${data.ticketId}</strong> was not found!</p>
+          <p>Query: <strong>${data.ticketId}</strong> not found in records.</p>
           <button class="btn btn-gray" onclick="resumeScanner()">Scan Next</button>`;
         return;
       }
 
-      if (data.alreadyCheckedIn) {
+      // Check if completely exhausted
+      if (data.alreadyCheckedIn || data.remaining <= 0) {
         resBox.className = "status-overlay status-error";
         resBox.innerHTML = `
-          <h3 style="margin: 0 0 6px;">⚠️ ALREADY CHECKED IN</h3>
+          <h3 style="margin: 0 0 6px;">⛔ ALL SEATS CHECKED IN</h3>
           <div class="details">
             <div><strong>Flat:</strong> ${data.flatNo}</div>
             <div><strong>Family Head:</strong> ${data.familyHead}</div>
-            <div><strong>Checked-In At:</strong> ${data.checkedInTime}</div>
+            <div><strong>Subscribed:</strong> ${data.totalMembers} Person(s)</div>
+            <div><strong>Already In:</strong> ${data.admittedSoFar} Person(s)</div>
+            <div><strong>Logs:</strong> ${data.checkedInTime || "N/A"}</div>
           </div>
+          <p style="color: #f87171; font-weight: bold;">No remaining entries allowed on this pass.</p>
           <button class="btn btn-gray" onclick="resumeScanner()">Scan Next</button>`;
         return;
       }
 
-      // Valid attendee found
+      // Store ticket context for check-in
+      currentTicketData = data;
+
       resBox.className = "status-overlay status-success";
       resBox.innerHTML = `
         <h3 style="margin: 0 0 6px;">✅ VERIFIED ENTRY</h3>
         <div class="details">
           <div><strong>Flat Number:</strong> ${data.flatNo}</div>
           <div><strong>Family Head:</strong> ${data.familyHead}</div>
-          <div><strong>Admitted Heads:</strong> <span class="badge">${data.memberCount} Person(s)</span></div>
+          <div><strong>Subscribed Heads:</strong> ${data.totalMembers} Person(s)</div>
+          <div><strong>Checked In So Far:</strong> ${data.admittedSoFar} Person(s)</div>
+          <div><strong>Remaining Allowed:</strong> <span class="quota-badge">${data.remaining}</span></div>
         </div>
-        <button class="btn btn-green" onclick="confirmEntry('${data.ticketId}')">Admit ${data.memberCount} Guests</button>
+
+        <div style="font-weight: bold; margin-top: 10px;">Select number of guests entering now:</div>
+        <div class="stepper-container">
+          <button class="step-btn" onclick="adjustCount(-1)">−</button>
+          <input type="number" id="admitCountInput" class="step-input" value="${data.remaining}" min="1" max="${data.remaining}" readonly>
+          <button class="step-btn" onclick="adjustCount(1)">+</button>
+        </div>
+
+        <button class="btn btn-green" id="admitBtn" onclick="submitAdmission()">Admit Guests</button>
         <button class="btn btn-gray" onclick="resumeScanner()">Cancel</button>`;
     }
 
-    function confirmEntry(ticketId) {
+    function adjustCount(delta) {
+      const input = document.getElementById("admitCountInput");
+      let currentVal = parseInt(input.value, 10) || 1;
+      let newVal = currentVal + delta;
+
+      if (newVal >= 1 && newVal <= currentTicketData.remaining) {
+        input.value = newVal;
+      }
+    }
+
+    function submitAdmission() {
+      const countInput = document.getElementById("admitCountInput");
+      const count = parseInt(countInput.value, 10);
+
+      if (!count || count < 1 || count > currentTicketData.remaining) {
+        alert(`Please select between 1 and ${currentTicketData.remaining} guest(s).`);
+        return;
+      }
+
       const resBox = document.getElementById("resultBox");
-      resBox.innerHTML = "⏳ Recording check-in in Google Sheets...";
-      queryBackend("admit", { ticketId: ticketId });
+      resBox.innerHTML = `⏳ Admitting ${count} guest(s)...`;
+      
+      queryBackend("admit", {
+        ticketId: currentTicketData.ticketId,
+        admitCount: count
+      });
     }
 
     function renderAdmission(data) {
       const resBox = document.getElementById("resultBox");
+
+      if (!data.success) {
+        resBox.className = "status-overlay status-error";
+        resBox.innerHTML = `
+          <h3>❌ Admission Failed</h3>
+          <p>${data.error || "Unknown server error"}</p>
+          <button class="btn btn-gray" onclick="resumeScanner()">Retry</button>`;
+        return;
+      }
+
       resBox.className = "status-overlay status-success";
       resBox.innerHTML = `
         <h3>🎉 Admitted Successfully!</h3>
-        <p>Flat ${data.flatNo} &bull; ${data.memberCount} Heads Recorded</p>
+        <div class="details">
+          <div><strong>Flat:</strong> ${data.flatNo} (${data.familyHead})</div>
+          <div><strong>Admitted Now:</strong> ${data.admittedJustNow} Person(s)</div>
+          <div><strong>Total Admitted:</strong> ${data.newAdmittedTotal} / ${data.totalMembers}</div>
+          <div><strong>Remaining for Later:</strong> <span class="quota-badge">${data.remaining}</span></div>
+        </div>
         <button class="btn btn-blue" onclick="resumeScanner()">Scan Next Guest</button>`;
     }
 
     function resumeScanner() {
       document.getElementById("resultBox").style.display = "none";
       document.getElementById("manualInput").value = "";
+      currentTicketData = null;
       isProcessing = false;
       if (html5QrCode) {
         try { html5QrCode.resume(); } catch (e) {}
