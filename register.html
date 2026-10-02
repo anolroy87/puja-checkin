@@ -33,7 +33,7 @@
         radial-gradient(circle at 90% 80%, rgba(217, 119, 6, 0.04) 0%, transparent 25%);
       color: var(--text-dark);
       margin: 0;
-      padding: 16px 12px 32px;
+      padding: 14px 10px 32px;
     }
 
     .container { max-width: 480px; margin: 0 auto; }
@@ -42,43 +42,142 @@
     .header {
       background: linear-gradient(135deg, #780202 0%, #a81313 50%, #780202 100%);
       color: #fff;
-      padding: 22px 16px 18px;
+      padding: 18px 14px 16px;
       text-align: center;
       position: relative;
       border-bottom: 4px solid var(--pujo-gold);
     }
 
-    .logo-img { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--pujo-yellow); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35); object-fit: cover; background: #fff; margin-bottom: 8px; }
-    .committee-title { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--pujo-gold-light); margin: 0 0 4px; }
-    .event-title { font-family: 'Cinzel', serif; font-size: 20px; font-weight: 800; margin: 0 0 4px; }
-    .event-subtitle { font-size: 13px; color: #fce7f3; margin: 0; }
+    .logo-img { width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--pujo-yellow); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35); object-fit: cover; background: #fff; margin-bottom: 6px; }
+    .committee-title { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--pujo-gold-light); margin: 0 0 4px; }
+    .event-title { font-family: 'Cinzel', serif; font-size: 19px; font-weight: 800; margin: 0 0 4px; }
+    .event-meta { font-size: 12px; color: #fce7f3; margin: 0; line-height: 1.4; }
 
-    .form-body { padding: 22px 18px; }
-    .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--pujo-crimson); margin: 20px 0 10px; display: flex; align-items: center; gap: 6px; }
-    .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border-accent); opacity: 0.6; }
+    /* Stepper Indicator */
+    .step-indicator {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #faf4eb;
+      padding: 12px 16px;
+      border-bottom: 1.5px solid var(--border-soft);
+    }
+    .step-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #8c7373;
+      flex: 1;
+      position: relative;
+    }
+    .step-node:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 11px;
+      left: 60%;
+      width: 80%;
+      height: 2px;
+      background: #e2d2c1;
+      z-index: 1;
+    }
+    .step-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #e2d2c1;
+      color: #5a3c3c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      position: relative;
+      z-index: 2;
+    }
+    .step-node.active .step-circle {
+      background: var(--pujo-crimson);
+      color: #fff;
+      box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.2);
+    }
+    .step-node.active { color: var(--pujo-crimson); font-weight: 700; }
+    .step-node.completed .step-circle { background: #16a34a; color: #fff; }
+
+    .form-body { padding: 20px 16px; }
+    .stage-section { display: none; }
+    .stage-section.active { display: block; animation: fadeIn 0.25s ease-out; }
+
+    .section-title { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--pujo-crimson); margin: 0 0 8px; display: flex; align-items: center; gap: 6px; }
+    .section-desc { font-size: 14px; color: var(--text-muted); margin: 0 0 14px; line-height: 1.4; }
+
+    /* Highlighted Disclaimer Box */
+    .disclaimer-box {
+      background: #fffbeb;
+      border: 1.5px solid #fde68a;
+      border-left: 4px solid var(--pujo-crimson);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 6px rgba(217, 119, 6, 0.08);
+    }
+    .disclaimer-title {
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--pujo-crimson);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .disclaimer-list {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 12px;
+      color: #78350f;
+      line-height: 1.5;
+    }
+    .disclaimer-list li {
+      margin-bottom: 4px;
+    }
+    .disclaimer-list li:last-child {
+      margin-bottom: 0;
+    }
 
     label { display: block; font-size: 13px; font-weight: 600; color: #442a2a; margin-bottom: 6px; }
     input, textarea { width: 100%; padding: 12px 14px; background: #faf7f2; border: 1.5px solid var(--border-soft); border-radius: 9px; color: var(--text-dark); font-size: 15px; margin-bottom: 14px; font-family: inherit; }
     input:focus, textarea:focus, select:focus { outline: none; border-color: var(--pujo-crimson); background: #ffffff; }
 
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
     /* Relation Checklist Matrix */
-    .relation-grid { background: #fdfaf6; border: 1.5px solid var(--border-soft); border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; }
-    .rel-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f2e7d8; }
+    .relation-grid { background: #fdfaf6; border: 1.5px solid var(--border-soft); border-radius: 12px; padding: 10px 12px; margin-bottom: 14px; }
+    .rel-item { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid #f2e7d8; }
     .rel-item:last-child { border-bottom: none; }
-    .rel-label { font-size: 14px; font-weight: 600; color: #4a1515; }
-    
-    .rel-control input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--pujo-crimson); margin: 0; cursor: pointer; }
-    .rel-select { width: 62px; height: 34px; padding: 4px 6px; background: #ffffff; border: 1.5px solid #d9c4b0; border-radius: 6px; font-size: 14px; font-weight: 700; color: #3b1b1b; }
+    .rel-label { font-size: 13px; font-weight: 600; color: #4a1515; }
+    .rel-control input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--pujo-crimson); margin: 0; cursor: pointer; }
+    .rel-select { width: 62px; height: 34px; padding: 3px 6px; background: #ffffff; border: 1.5px solid #d9c4b0; border-radius: 6px; font-size: 14px; font-weight: 700; color: #3b1b1b; }
 
-    .quota-summary-box { background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 9px; padding: 10px 14px; font-size: 13px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+    .quota-summary-box { background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 9px; padding: 10px 14px; font-size: 13px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
     .quota-val { font-weight: 800; font-size: 15px; color: var(--pujo-red); }
 
-    /* 5-Day Card Container */
-    .day-card { background: #fdfaf6; border: 1.5px solid #f2e7d8; border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+    .family-recap-card {
+      background: #fdf6ec;
+      border: 1px dashed var(--border-accent);
+      border-radius: 9px;
+      padding: 10px 12px;
+      font-size: 12px;
+      margin-bottom: 14px;
+      color: #633215;
+    }
+
+    /* Day Card */
+    .day-card { background: #fdfaf6; border: 1.5px solid #f2e7d8; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
     .day-header-row { display: flex; align-items: center; justify-content: space-between; }
-    .day-name { font-weight: 700; font-size: 14px; color: #4a1515; }
+    .day-name { font-weight: 700; font-size: 13px; color: #4a1515; }
     .day-rate { font-size: 11px; color: var(--pujo-gold); font-weight: 600; }
     .counters-wrapper { display: flex; gap: 8px; }
     .counter-unit { text-align: center; }
@@ -86,13 +185,12 @@
     .fam-tag { color: var(--pujo-crimson); }
     .guest-tag { color: var(--pujo-gold); }
 
-    .pujo-select { width: 58px; height: 38px; padding: 4px 6px; background: #ffffff; border: 1.5px solid #d9c4b0; border-radius: 7px; font-size: 15px; font-weight: 700; color: #3b1b1b; cursor: pointer; }
+    .pujo-select { width: 56px; height: 36px; padding: 3px 5px; background: #ffffff; border: 1.5px solid #d9c4b0; border-radius: 7px; font-size: 14px; font-weight: 700; color: #3b1b1b; cursor: pointer; }
 
-    /* Menu Link */
     .menu-link {
       display: inline-block;
       margin-top: 4px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       color: #991b1b;
       background: #fef2f2;
@@ -101,75 +199,92 @@
       border-radius: 6px;
       text-decoration: none;
       cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .menu-link:hover {
-      background: #fee2e2;
-      color: #7f1d1d;
-      border-color: #fca5a5;
     }
 
-    /* Day-wise Charge Breakdown Badge */
     .day-charge-info {
       margin-top: 8px;
       padding: 6px 10px;
       border-radius: 6px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       display: none;
     }
-    .charge-paid {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #b91c1c;
-    }
-    .charge-free {
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      color: #065f46;
-    }
+    .charge-paid { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+    .charge-free { background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; }
 
-    /* Total Payment Card with QR Code */
+    .summary-card {
+      background: #faf7f2;
+      border: 1px solid #ebd9c8;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+      font-size: 13px;
+    }
+    .summary-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed #e2d2c1; }
+    .summary-row:last-child { border-bottom: none; }
+
     .total-pricing-card { 
       background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); 
       border: 1.5px dashed var(--pujo-gold); 
-      border-radius: 14px; 
-      padding: 16px 14px; 
+      border-radius: 12px; 
+      padding: 16px 12px; 
       text-align: center; 
-      margin: 16px 0 18px; 
+      margin: 12px 0 16px; 
     }
     .pricing-title { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #92400e; }
     .price-value { font-family: 'Cinzel', serif; font-size: 32px; font-weight: 800; color: var(--pujo-red); margin: 4px 0 2px; }
-    .pricing-sub { font-size: 11px; color: #78350f; margin-bottom: 12px; }
+    .pricing-sub { font-size: 11px; color: #78350f; margin-bottom: 10px; }
 
-    /* Payment QR Box */
     .payment-qr-wrap {
       background: #ffffff;
       border: 2px solid var(--pujo-yellow);
-      border-radius: 12px;
-      padding: 10px;
+      border-radius: 10px;
+      padding: 8px;
       display: inline-block;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-      margin: 6px 0 10px;
+      margin: 4px 0 6px;
     }
-    .payment-qr-img {
-      width: 170px;
-      height: 170px;
-      object-fit: contain;
-      display: block;
-      border-radius: 6px;
-    }
-    .qr-scan-hint {
-      font-size: 11px;
-      font-weight: 600;
-      color: #78350f;
-      margin-top: 4px;
-    }
+    .payment-qr-img { width: 160px; height: 160px; object-fit: contain; display: block; border-radius: 6px; }
 
-    .btn-submit { width: 100%; padding: 15px; background: linear-gradient(135deg, #a81313 0%, #dc2626 100%); color: #fff; font-size: 16px; font-weight: 700; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 14px rgba(185, 28, 28, 0.35); }
-    .btn-submit:disabled { background: #a8a29e; box-shadow: none; cursor: not-allowed; }
+    .nav-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 18px;
+      gap: 10px;
+    }
+    .btn-nav {
+      padding: 13px 20px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .btn-next {
+      background: linear-gradient(135deg, #a81313 0%, #dc2626 100%);
+      color: #fff;
+      margin-left: auto;
+      box-shadow: 0 4px 12px rgba(185, 28, 28, 0.3);
+    }
+    .btn-back {
+      background: #f1e9de;
+      color: #4a2828;
+      border: 1px solid #d9c4b0;
+    }
+    .btn-submit {
+      background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+      color: #fff;
+      flex: 1;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+    }
+    .btn-nav:disabled { background: #c7b9ab; color: #fff; cursor: not-allowed; box-shadow: none; }
 
-    /* Floating Modal */
     .modal-backdrop {
       display: none;
       position: fixed;
@@ -186,9 +301,9 @@
       position: relative;
       background: #ffffff;
       border-radius: 16px;
-      width: 95%; /* Adapts to small mobile screens */
-      max-width: 480px;
-      max-height: 90vh; /* Leaves breathing space top and bottom */
+      width: 95%;
+      max-width: 460px;
+      max-height: 88vh;
       overflow: hidden;
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
       border: 3px solid var(--pujo-yellow);
@@ -198,55 +313,32 @@
     .modal-header {
       background: linear-gradient(135deg, #780202 0%, #a81313 100%);
       color: #ffffff;
-      padding: 12px 16px;
+      padding: 12px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .modal-header h3 {
-      margin: 0;
-      font-size: 15px;
-      font-family: 'Cinzel', serif;
-      letter-spacing: 0.5px;
-      color: var(--pujo-gold-light);
-    }
+    .modal-header h3 { margin: 0; font-size: 14px; font-family: 'Cinzel', serif; color: var(--pujo-gold-light); }
     .close-btn {
       background: #ffffff;
       color: #780202;
       border: none;
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-      line-height: 1;
     }
-    .close-btn:hover { background: #fecaca; }
-    .modal-body {
-      padding: 10px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch; /* Smooth iOS momentum scrolling */
-      text-align: center;
-      background: #fdfaf6;
-    }
-
-    .modal-body img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      display: block;
-      margin: 0 auto;
-    }
+    .modal-body { padding: 10px; overflow-y: auto; text-align: center; background: #fdfaf6; }
+    .modal-body img { width: 100%; height: auto; border-radius: 8px; display: block; margin: 0 auto; }
 
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -255,126 +347,222 @@
   <div class="container">
     <div class="card">
       
+      <!-- Updated Festive Header -->
       <div class="header">
         <img src="logo.png" alt="Orchard Avaasa Logo" class="logo-img" onerror="this.style.display='none'">
         <div class="committee-title">Orchard Avaasa Event Organising Committee</div>
         <div class="event-title">Annual Durga Puja Lunch 2026</div>
-        <div class="event-subtitle">Community Hall &bull; 17th – 21st October 2026</div>
+        <div class="event-meta">
+          <strong>Venue:</strong> Community Hall, Orchard Avaasa<br>
+          <strong>Dates:</strong> 17th – 21st October 2026
+        </div>
       </div>
 
-      <form id="pujoForm" class="form-body" onsubmit="handleSubmit(event)">
-        
-        <div class="section-title">1. Resident Details</div>
-        
-        <label>Full Name of Family Head *</label>
-        <input type="text" id="headName" placeholder="e.g., Surajit Dutta" required>
+      <!-- 4-Stage Progress Tracker -->
+      <div class="step-indicator">
+        <div class="step-node active" id="stepNode1">
+          <div class="step-circle">1</div>
+          <span>Details</span>
+        </div>
+        <div class="step-node" id="stepNode2">
+          <div class="step-circle">2</div>
+          <span>Family</span>
+        </div>
+        <div class="step-node" id="stepNode3">
+          <div class="step-circle">3</div>
+          <span>Meals</span>
+        </div>
+        <div class="step-node" id="stepNode4">
+          <div class="step-circle">4</div>
+          <span>Summary</span>
+        </div>
+      </div>
 
-        <div class="row">
-          <div>
-            <label>Flat / Unit *</label>
-            <input type="text" id="flatNo" placeholder="e.g., 13E" required>
+      <form id="pujoForm" class="form-body" onsubmit="handleFinalSubmit(event)">
+        
+        <!-- STAGE 1: RESIDENT DETAILS -->
+        <div class="stage-section active" id="stage1">
+          
+          <!-- Highlighted Disclaimer Box -->
+          <div class="disclaimer-box">
+            <div class="disclaimer-title">📌 Important Disclaimer</div>
+            <ul class="disclaimer-list">
+              <li>Feast will be <strong>complimentary for all 5 days</strong> for Family members of each flat (as defined in this form later).</li>
+              <li>All visiting guest's subscription for food will be at <strong>actual per plate cost</strong> from caterer.</li>
+            </ul>
           </div>
-          <div>
-            <label>WhatsApp No *</label>
-            <input type="tel" id="phone" placeholder="10-digit mobile" pattern="[0-9]{10}" required>
+
+          <div class="section-title">Stage 1: Resident Details</div>
+          <p class="section-desc">Please provide your contact information to receive your digital entry pass.</p>
+
+          <label>Flat / Unit Number *</label>
+          <input type="text" id="flatNo" placeholder="e.g., 13E" required>
+
+          <label>Name of Registrant *</label>
+          <input type="text" id="headName" placeholder="e.g., Surajit Dutta" oninput="updateSelfNameDisplay()" required>
+
+          <label>WhatsApp Number *</label>
+          <input type="tel" id="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+
+          <label>Email Address *</label>
+          <input type="email" id="email" placeholder="name@domain.com" required>
+
+          <div class="nav-actions">
+            <div></div>
+            <button type="button" class="btn-nav btn-next" onclick="goToStage(2)">Next ➔</button>
           </div>
         </div>
 
-        <label>Email Address (QR Pass will be sent here) *</label>
-        <input type="email" id="email" placeholder="name@example.com" required>
+        <!-- STAGE 2: DEFINE FAMILY -->
+        <div class="stage-section" id="stage2">
+          <div class="section-title">Stage 2: Define Family Members</div>
+          <p class="section-desc">Food is complimentary up to 7 members; additional members are chargeable at actual plate rates.</p>
 
-        <!-- Section 2: Define Family Members -->
-        <div class="section-title">2. Define Family Members</div>
-        <p style="font-size: 12px; color: var(--text-muted); margin: 0 0 10px;">
-          Include Family relation (Complimentary food up to 7 members, rest chargeable on actual plate price)
-        </p>
-
-        <div class="relation-grid">
-          <div class="rel-item">
-            <span class="rel-label">Self (Family Head)</span>
-            <div class="rel-control"><input type="checkbox" id="rel_self" checked disabled></div>
-          </div>
-          <div class="rel-item">
-            <span class="rel-label">Husband / Wife</span>
-            <div class="rel-control"><input type="checkbox" id="rel_spouse" onchange="updateHouseholdQuotas()"></div>
-          </div>
-          <div class="rel-item">
-            <span class="rel-label">Children</span>
-            <div class="rel-control">
-              <select id="rel_children" class="rel-select" onchange="updateHouseholdQuotas()">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4+</option>
-              </select>
+          <div class="relation-grid">
+            <div class="rel-item">
+              <span class="rel-label" id="selfLabelText">Self (Registrant)</span>
+              <div class="rel-control"><input type="checkbox" id="rel_self" checked disabled></div>
+            </div>
+            <div class="rel-item">
+              <span class="rel-label">Husband / Wife</span>
+              <div class="rel-control"><input type="checkbox" id="rel_spouse" onchange="updateHouseholdQuotas()"></div>
+            </div>
+            <div class="rel-item">
+              <span class="rel-label">Children</span>
+              <div class="rel-control">
+                <select id="rel_children" class="rel-select" onchange="updateHouseholdQuotas()">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4+</option>
+                </select>
+              </div>
+            </div>
+            <div class="rel-item">
+              <span class="rel-label">Siblings (Brother / Sister)</span>
+              <div class="rel-control">
+                <select id="rel_siblings" class="rel-select" onchange="updateHouseholdQuotas()">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4+</option>
+                </select>
+              </div>
+            </div>
+            <div class="rel-item">
+              <span class="rel-label">Father</span>
+              <div class="rel-control"><input type="checkbox" id="rel_father" onchange="updateHouseholdQuotas()"></div>
+            </div>
+            <div class="rel-item">
+              <span class="rel-label">Mother</span>
+              <div class="rel-control"><input type="checkbox" id="rel_mother" onchange="updateHouseholdQuotas()"></div>
+            </div>
+            <div class="rel-item">
+              <span class="rel-label">Father-in-law</span>
+              <div class="rel-control"><input type="checkbox" id="rel_fil" onchange="updateHouseholdQuotas()"></div>
+            </div>
+            <div class="rel-item">
+              <span class="rel-label">Mother-in-law</span>
+              <div class="rel-control"><input type="checkbox" id="rel_mil" onchange="updateHouseholdQuotas()"></div>
+            </div>
+            <div class="rel-item">
+              <span class="rel-label">Son-in-law</span>
+              <div class="rel-control">
+                <select id="rel_sil" class="rel-select" onchange="updateHouseholdQuotas()">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </div>
+            </div>
+            <div class="rel-item">
+              <span class="rel-label">Daughter-in-law</span>
+              <div class="rel-control">
+                <select id="rel_dil" class="rel-select" onchange="updateHouseholdQuotas()">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </div>
             </div>
           </div>
-          <div class="rel-item">
-            <span class="rel-label">Siblings (Brother / Sister)</span>
-            <div class="rel-control">
-              <select id="rel_siblings" class="rel-select" onchange="updateHouseholdQuotas()">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4+</option>
-              </select>
-            </div>
+
+          <div class="quota-summary-box">
+            <span>Defined Family Strength:</span>
+            <span class="quota-val" id="familyQuotaDisplay">1 Member</span>
           </div>
-          <div class="rel-item">
-            <span class="rel-label">Father</span>
-            <div class="rel-control"><input type="checkbox" id="rel_father" onchange="updateHouseholdQuotas()"></div>
-          </div>
-          <div class="rel-item">
-            <span class="rel-label">Mother</span>
-            <div class="rel-control"><input type="checkbox" id="rel_mother" onchange="updateHouseholdQuotas()"></div>
-          </div>
-          <div class="rel-item">
-            <span class="rel-label">Father-in-law</span>
-            <div class="rel-control"><input type="checkbox" id="rel_fil" onchange="updateHouseholdQuotas()"></div>
-          </div>
-          <div class="rel-item">
-            <span class="rel-label">Mother-in-law</span>
-            <div class="rel-control"><input type="checkbox" id="rel_mil" onchange="updateHouseholdQuotas()"></div>
+
+          <div class="nav-actions">
+            <button type="button" class="btn-nav btn-back" onclick="goToStage(1)">⬅ Back</button>
+            <button type="button" class="btn-nav btn-next" onclick="goToStage(3)">Next ➔</button>
           </div>
         </div>
 
-        <div class="quota-summary-box">
-          <span>Defined Family Strength:</span>
-          <span class="quota-val" id="familyQuotaDisplay">1 Member</span>
+        <!-- STAGE 3: DAILY MEAL ATTENDANCE -->
+        <div class="stage-section" id="stage3">
+          <div class="section-title">Stage 3: Daily Meal Attendance</div>
+          
+          <div class="family-recap-card">
+            <strong>Family Composition Defined:</strong>
+            <div id="familySummaryText" style="margin-top: 3px;">Self (1 Member)</div>
+          </div>
+
+          <p class="section-desc">Select attending headcounts for each day. Tap "View Menu" to check daily dishes.</p>
+
+          <div id="daysWrapper"></div>
+
+          <div style="margin-top: 14px;">
+            <label>List of Guests Attending (comma separated)</label>
+            <textarea id="guestNames" rows="2" placeholder="e.g., Ayan and Anol on Ashtami, Mrs. Sengupta on Navami"></textarea>
+          </div>
+
+          <div class="nav-actions">
+            <button type="button" class="btn-nav btn-back" onclick="goToStage(2)">⬅ Back</button>
+            <button type="button" class="btn-nav btn-next" onclick="goToStage(4)">Next ➔</button>
+          </div>
         </div>
 
-        <!-- Section 3: Daily Attendance -->
-        <div class="section-title">3. Daily Meal Attendance</div>
-        <p style="font-size: 12px; color: var(--text-muted); margin: 0 0 12px;">
-          Select family and guest attendance for each day.
-        </p>
+        <!-- STAGE 4: SUMMARY & CONFIRMATION -->
+        <div class="stage-section" id="stage4">
+          <div class="section-title">Stage 4: Review & Payment</div>
+          <p class="section-desc">Verify your registration details before final submission.</p>
 
-        <div id="daysWrapper"></div>
+          <div class="summary-card">
+            <div class="summary-row"><span>Resident:</span><strong id="sumName">-</strong></div>
+            <div class="summary-row"><span>Flat / Unit:</span><strong id="sumFlat">-</strong></div>
+            <div class="summary-row"><span>WhatsApp:</span><span id="sumPhone">-</span></div>
+            <div class="summary-row"><span>Email:</span><span id="sumEmail">-</span></div>
+            <div class="summary-row"><span>Family Defined:</span><span id="sumFamilyCount">-</span></div>
+          </div>
 
-        <!-- Section 4: Contribution & Payment QR Section -->
-        <div id="guestPaySection" style="display: none;">
+          <!-- Total Contribution Section -->
           <div class="total-pricing-card">
             <div class="pricing-title">Total Payable Contribution for Food Token</div>
             <div class="price-value" id="totalPriceTag">₹0</div>
-            <div class="pricing-sub" id="priceBreakdownSub">Includes extra family members over 7 and guest plates</div>
+            <div class="pricing-sub" id="priceBreakdownSub">Complimentary meal quota applied</div>
             
-            <!-- Embedded Payment QR Code -->
-            <div class="payment-qr-wrap">
-              <img src="Payment QR.jpeg" alt="Society UPI Payment QR" class="payment-qr-img" onerror="this.alt='QR Image missing: Payment QR.jpeg'">
-              <div class="qr-scan-hint">📲 Scan & Pay via any UPI App</div>
+            <div id="paymentQrBox" style="display: none;">
+              <div class="payment-qr-wrap">
+                <img src="Payment QR.jpeg" alt="Society UPI Payment QR" class="payment-qr-img" onerror="this.alt='QR Image missing: Payment QR.jpeg'">
+                <div style="font-size: 11px; font-weight: 600; color: #78350f; margin-top: 4px;">📲 Scan & Pay via any UPI App</div>
+              </div>
             </div>
           </div>
 
-          <label>List of Guests Attending (comma separated) *</label>
-          <textarea id="guestNames" rows="2" placeholder="e.g., Ayan and Anol on all days, OR Ms. Sharma on Navami, Mr. Gupta on Dashami"></textarea>
+          <!-- UTR Box -->
+          <div id="utrSection" style="display: none;">
+            <label>UPI Transaction / UTR Number *</label>
+            <input type="text" id="paymentRef" placeholder="Enter 12-digit UTR from bank/UPI app">
+          </div>
 
-          <label>UPI Transaction / UTR Number *</label>
-          <input type="text" id="paymentRef" placeholder="Enter 12-digit UTR from your bank/UPI app">
+          <div class="nav-actions">
+            <button type="button" class="btn-nav btn-back" onclick="goToStage(3)">⬅ Back</button>
+            <button type="submit" id="submitBtn" class="btn-nav btn-submit">Confirm Registration & Get Pass</button>
+          </div>
         </div>
 
-        <button type="submit" id="submitBtn" class="btn-submit">Confirm Registration & Get Pass</button>
       </form>
 
     </div>
@@ -407,12 +595,51 @@
       { key: "D5", name: "21-Oct (Vijaya Dashami)",       rate: 150, menuImg: "Dashami.jpeg" }
     ];
 
-    let definedFamilyCount = 1; // Starts with Self
+    let currentStage = 1;
+    let definedFamilyCount = 1;
 
     window.addEventListener("DOMContentLoaded", () => {
       renderDayCards();
       updateHouseholdQuotas();
     });
+
+    function goToStage(stageNum) {
+      if (stageNum === 2 && currentStage === 1) {
+        if (!document.getElementById("flatNo").value.trim() ||
+            !document.getElementById("headName").value.trim() ||
+            !document.getElementById("phone").value.trim() ||
+            !document.getElementById("email").value.trim()) {
+          alert("Please fill in all resident details in Stage 1.");
+          return;
+        }
+      }
+
+      if (stageNum === 3) {
+        document.getElementById("familySummaryText").innerText = getRelationSummaryString() + ` (${definedFamilyCount} Members)`;
+      }
+
+      if (stageNum === 4) {
+        populateSummaryStage();
+      }
+
+      document.querySelectorAll(".stage-section").forEach(s => s.classList.remove("active"));
+      document.getElementById(`stage${stageNum}`).classList.add("active");
+
+      for (let i = 1; i <= 4; i++) {
+        const node = document.getElementById(`stepNode${i}`);
+        node.classList.remove("active", "completed");
+        if (i < stageNum) node.classList.add("completed");
+        if (i === stageNum) node.classList.add("active");
+      }
+
+      currentStage = stageNum;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateSelfNameDisplay() {
+      const name = document.getElementById("headName").value.trim();
+      document.getElementById("selfLabelText").innerText = name ? `Self (${name})` : "Self (Registrant)";
+    }
 
     function updateHouseholdQuotas() {
       let count = 1; // Self
@@ -423,6 +650,8 @@
       if (document.getElementById("rel_mother").checked) count += 1;
       if (document.getElementById("rel_fil").checked) count += 1;
       if (document.getElementById("rel_mil").checked) count += 1;
+      count += parseInt(document.getElementById("rel_sil").value, 10);
+      count += parseInt(document.getElementById("rel_dil").value, 10);
 
       definedFamilyCount = count;
       document.getElementById("familyQuotaDisplay").innerText = `${definedFamilyCount} Member${definedFamilyCount > 1 ? 's' : ''}`;
@@ -448,7 +677,6 @@
                 <div class="counter-unit">
                   <span class="fam-tag">Family</span>
                   <select id="fam_${d.key}" class="pujo-select" onchange="calculateGrandTotal()">
-                    <!-- Rebuilt dynamically -->
                   </select>
                 </div>
                 <div class="counter-unit">
@@ -459,7 +687,6 @@
                 </div>
               </div>
             </div>
-            <!-- Itemized Charge Breakdown Per Day -->
             <div id="info_${d.key}" class="day-charge-info"></div>
           </div>
         `;
@@ -483,7 +710,6 @@
 
     function calculateGrandTotal() {
       let grandTotal = 0;
-      let totalChargeableHeadsAcrossAllDays = 0;
 
       PUJO_DAYS.forEach(d => {
         const famSelected = parseInt(document.getElementById(`fam_${d.key}`).value, 10) || 0;
@@ -496,10 +722,8 @@
         const dayCost = totalChargeableToday * d.rate;
 
         grandTotal += dayCost;
-        totalChargeableHeadsAcrossAllDays += totalChargeableToday;
 
         const infoBox = document.getElementById(`info_${d.key}`);
-
         if (famSelected === 0 && gstSelected === 0) {
           infoBox.style.display = "none";
         } else if (totalChargeableToday > 0) {
@@ -507,7 +731,7 @@
           infoBox.className = "day-charge-info charge-paid";
           let breakdownParts = [];
           if (chargeableFam > 0) breakdownParts.push(`${chargeableFam} extra family head`);
-          if (chargeableGuests > 0) breakdownParts.push(`${chargeableGuests} guest${chargeableGuests > 1 ? 's' : ''}`);
+          if (chargeableGuests > 0) breakdownParts.push(`${chargeableGuests} guest(s)`);
           infoBox.innerHTML = `Chargeable: ${breakdownParts.join(', ')} &bull; <strong>${d.name.split(' ')[0]}'s charge: ₹${dayCost}</strong>`;
         } else {
           infoBox.style.display = "block";
@@ -516,22 +740,36 @@
         }
       });
 
-      const guestBox = document.getElementById("guestPaySection");
-      const guestNames = document.getElementById("guestNames");
-      const paymentRef = document.getElementById("paymentRef");
+      return grandTotal;
+    }
+
+    function populateSummaryStage() {
+      const grandTotal = calculateGrandTotal();
+
+      document.getElementById("sumName").innerText = document.getElementById("headName").value.trim();
+      document.getElementById("sumFlat").innerText = document.getElementById("flatNo").value.trim();
+      document.getElementById("sumPhone").innerText = document.getElementById("phone").value.trim();
+      document.getElementById("sumEmail").innerText = document.getElementById("email").value.trim();
+      document.getElementById("sumFamilyCount").innerText = `${definedFamilyCount} Person(s)`;
+
+      const priceTag = document.getElementById("totalPriceTag");
+      const qrBox = document.getElementById("paymentQrBox");
+      const utrSection = document.getElementById("utrSection");
+      const paymentRefInput = document.getElementById("paymentRef");
+
+      priceTag.innerText = `₹${grandTotal.toLocaleString('en-IN')}`;
 
       if (grandTotal > 0) {
-        guestBox.style.display = "block";
-        guestNames.required = true;
-        paymentRef.required = true;
-        document.getElementById("totalPriceTag").innerText = `₹${grandTotal.toLocaleString('en-IN')}`;
+        qrBox.style.display = "block";
+        utrSection.style.display = "block";
+        paymentRefInput.required = true;
+        document.getElementById("priceBreakdownSub").innerText = "Scan the QR code to pay the guest contribution amount.";
       } else {
-        guestBox.style.display = "none";
-        guestNames.required = false;
-        paymentRef.required = false;
-        guestNames.value = "";
-        paymentRef.value = "";
-        document.getElementById("totalPriceTag").innerText = "₹0";
+        qrBox.style.display = "none";
+        utrSection.style.display = "none";
+        paymentRefInput.required = false;
+        paymentRefInput.value = "";
+        document.getElementById("priceBreakdownSub").innerText = "All registered meals are covered under the complimentary quota (₹0).";
       }
     }
 
@@ -543,7 +781,7 @@
       document.body.style.overflow = "hidden";
     }
 
-    function closeMenuModal(e) {
+    function closeMenuModal() {
       const modal = document.getElementById("menuModal");
       modal.style.display = "none";
       document.getElementById("modalMenuImg").src = "";
@@ -551,7 +789,8 @@
     }
 
     function getRelationSummaryString() {
-      let rels = ["Self"];
+      const selfName = document.getElementById("headName").value.trim() || "Registrant";
+      let rels = [`Self (${selfName})`];
       if (document.getElementById("rel_spouse").checked) rels.push("Spouse");
       const ch = document.getElementById("rel_children").value;
       if (ch > 0) rels.push(`${ch} Children`);
@@ -561,10 +800,14 @@
       if (document.getElementById("rel_mother").checked) rels.push("Mother");
       if (document.getElementById("rel_fil").checked) rels.push("Father-in-law");
       if (document.getElementById("rel_mil").checked) rels.push("Mother-in-law");
+      const sil = document.getElementById("rel_sil").value;
+      if (sil > 0) rels.push(`${sil} Son-in-law`);
+      const dil = document.getElementById("rel_dil").value;
+      if (dil > 0) rels.push(`${dil} Daughter-in-law`);
       return rels.join(", ");
     }
 
-    function handleSubmit(e) {
+    function handleFinalSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById("submitBtn");
       btn.disabled = true;
