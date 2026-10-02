@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.8, maximum-scale=3.0, user-scalable=yes">
+  <title>Durga Puja Lunch Registration 2026 | Orchard Avaasa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --pujo-red: #8b0000;
+      --pujo-crimson: #b91c1c;
+      --pujo-gold: #d97706;
+      --pujo-gold-light: #fef3c7;
+      --pujo-yellow: #f59e0b;
+      --bg-cream: #fdfbf7;
+      --card-white: #ffffff;
+      --text-dark: #271212;
+      --text-muted: #6b5858;
+      --border-soft: #f0e6da;
+      --border-accent: #e5c287;
+    }
+
+    * { box-sizing: border-box; }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-cream);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(185, 28, 28, 0.04) 0%, transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(217, 119, 6, 0.04) 0%, transparent 25%);
+      color: var(--text-dark);
+      margin: 0;
+      padding: 16px 12px 32px;
+    }
+
+    .container { max-width: 480px; margin: 0 auto; }
+    .card { background: var(--card-white); border-radius: 18px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(139, 0, 0, 0.12); border: 1px solid var(--border-soft); }
+    
+    .header {
+      background: linear-gradient(135deg, #780202 0%, #a81313 50%, #780202 100%);
+      color: #fff;
+      padding: 22px 16px 18px;
+      text-align: center;
+      position: relative;
+      border-bottom: 4px solid var(--pujo-gold);
+    }
+
+    .logo-img { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--pujo-yellow); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35); object-fit: cover; background: #fff; margin-bottom: 8px; }
+    .committee-title { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--pujo-gold-light); margin: 0 0 4px; }
+    .event-title { font-family: 'Cinzel', serif; font-size: 20px; font-weight: 800; margin: 0 0 4px; }
+    .event-subtitle { font-size: 13px; color: #fce7f3; margin: 0; }
+
+    .form-body { padding: 22px 18px; }
+    .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--pujo-crimson); margin: 20px 0 10px; display: flex; align-items: center; gap: 6px; }
+    .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border-accent); opacity: 0.6; }
+
+    label { display: block; font-size: 13px; font-weight: 600; color: #442a2a; margin-bottom: 6px; }
+    input, textarea { width: 100%; padding: 12px 14px; background: #faf7f2; border: 1.5px solid var(--border-soft); border-radius: 9px; color: var(--text-dark); font-size: 15px; margin-bottom: 14px; font-family: inherit; }
+    input:focus, textarea:focus, select:focus { outline: none; border-color: var(--pujo-crimson); background: #ffffff; }
+
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* Relation Checklist Matrix */
+    .relation-grid { background: #fdfaf6; border: 1.5px solid var(--border-soft); border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; }
+    .rel-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f2e7d8; }
+    .rel-item:last-child { border-bottom: none; }
+    .rel-label { font-size: 14px; font-weight: 600; color: #4a1515; }
+    
+    .rel-control input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--pujo-crimson); margin: 0; cursor: pointer; }
+    .rel-select { width: 62px; height: 34px; padding: 4px 6px; background: #ffffff; border: 1.5px solid #d9c4b0; border-radius: 6px; font-size: 14px; font-weight: 700; color: #3b1b1b; }
+
+    .quota-summary-box { background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 9px; padding: 10px 14px; font-size: 13px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+    .quota-val { font-weight: 800; font-size: 15px; color: var(--pujo-red); }
+
+    /* 5-Day Card Container */
+    .day-card { background: #fdfaf6; border: 1.5px solid #f2e7d8; border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+    .day-header-row { display: flex; align-items: center; justify-content: space-between; }
+    .day-name { font-weight: 700; font-size: 14px; color: #4a1515; }
+    .day-rate { font-size: 11px; color: var(--pujo-gold); font-weight: 600; }
+    .counters-wrapper { display: flex; gap: 8px; }
+    .counter-unit { text-align: center; }
+    .counter-unit span { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-bottom: 3px; }
+    .fam-tag { color: var(--pujo-crimson); }
+    .guest-tag { color: var(--pujo-gold); }
+
+    .pujo-select { width: 58px; height: 38px; padding: 4px 6px; background: #ffffff; border: 1.5px solid #d9c4b0; border-radius: 7px; font-size: 15px; font-weight: 700; color: #3b1b1b; cursor: pointer; }
+
+    /* Menu Link */
+    .menu-link {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #991b1b;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .menu-link:hover {
+      background: #fee2e2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* Day-wise Charge Breakdown Badge */
+    .day-charge-info {
+      margin-top: 8px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      display: none;
+    }
+    .charge-paid {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #b91c1c;
+    }
+    .charge-free {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+    }
+
+    /* Total Payment Card with QR Code */
+    .total-pricing-card { 
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); 
+      border: 1.5px dashed var(--pujo-gold); 
+      border-radius: 14px; 
+      padding: 16px 14px; 
+      text-align: center; 
+      margin: 16px 0 18px; 
+    }
+    .pricing-title { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #92400e; }
+    .price-value { font-family: 'Cinzel', serif; font-size: 32px; font-weight: 800; color: var(--pujo-red); margin: 4px 0 2px; }
+    .pricing-sub { font-size: 11px; color: #78350f; margin-bottom: 12px; }
+
+    /* Payment QR Box */
+    .payment-qr-wrap {
+      background: #ffffff;
+      border: 2px solid var(--pujo-yellow);
+      border-radius: 12px;
+      padding: 10px;
+      display: inline-block;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      margin: 6px 0 10px;
+    }
+    .payment-qr-img {
+      width: 170px;
+      height: 170px;
+      object-fit: contain;
+      display: block;
+      border-radius: 6px;
+    }
+    .qr-scan-hint {
+      font-size: 11px;
+      font-weight: 600;
+      color: #78350f;
+      margin-top: 4px;
+    }
+
+    .btn-submit { width: 100%; padding: 15px; background: linear-gradient(135deg, #a81313 0%, #dc2626 100%); color: #fff; font-size: 16px; font-weight: 700; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 14px rgba(185, 28, 28, 0.35); }
+    .btn-submit:disabled { background: #a8a29e; box-shadow: none; cursor: not-allowed; }
+
+    /* Floating Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(4px);
+      z-index: 99999;
+      padding: 16px;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.2s ease-out;
+    }
+    .modal-content {
+      position: relative;
+      background: #ffffff;
+      border-radius: 16px;
+      width: 95%; /* Adapts to small mobile screens */
+      max-width: 480px;
+      max-height: 90vh; /* Leaves breathing space top and bottom */
+      overflow: hidden;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+      border: 3px solid var(--pujo-yellow);
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-header {
+      background: linear-gradient(135deg, #780202 0%, #a81313 100%);
+      color: #ffffff;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-header h3 {
+      margin: 0;
+      font-size: 15px;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.5px;
+      color: var(--pujo-gold-light);
+    }
+    .close-btn {
+      background: #ffffff;
+      color: #780202;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      line-height: 1;
+    }
+    .close-btn:hover { background: #fecaca; }
+    .modal-body {
+      padding: 10px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch; /* Smooth iOS momentum scrolling */
+      text-align: center;
+      background: #fdfaf6;
+    }
+
+    .modal-body img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="card">
+      
+      <div class="header">
+        <img src="logo.png" alt="Orchard Avaasa Logo" class="logo-img" onerror="this.style.display='none'">
+        <div class="committee-title">Orchard Avaasa Event Organising Committee</div>
+        <div class="event-title">Annual Durga Puja Lunch 2026</div>
+        <div class="event-subtitle">Community Hall &bull; 17th – 21st October 2026</div>
+      </div>
+
+      <form id="pujoForm" class="form-body" onsubmit="handleSubmit(event)">
+        
+        <div class="section-title">1. Resident Details</div>
+        
+        <label>Full Name of Family Head *</label>
+        <input type="text" id="headName" placeholder="e.g., Surajit Dutta" required>
+
+        <div class="row">
+          <div>
+            <label>Flat / Unit *</label>
+            <input type="text" id="flatNo" placeholder="e.g., 13E" required>
+          </div>
+          <div>
+            <label>WhatsApp No *</label>
+            <input type="tel" id="phone" placeholder="10-digit mobile" pattern="[0-9]{10}" required>
+          </div>
+        </div>
+
+        <label>Email Address (QR Pass will be sent here) *</label>
+        <input type="email" id="email" placeholder="name@example.com" required>
+
+        <!-- Section 2: Define Family Members -->
+        <div class="section-title">2. Define Family Members</div>
+        <p style="font-size: 12px; color: var(--text-muted); margin: 0 0 10px;">
+          Include Family relation (Complimentary food up to 7 members, rest chargeable on actual plate price)
+        </p>
+
+        <div class="relation-grid">
+          <div class="rel-item">
+            <span class="rel-label">Self (Family Head)</span>
+            <div class="rel-control"><input type="checkbox" id="rel_self" checked disabled></div>
+          </div>
+          <div class="rel-item">
+            <span class="rel-label">Husband / Wife</span>
+            <div class="rel-control"><input type="checkbox" id="rel_spouse" onchange="updateHouseholdQuotas()"></div>
+          </div>
+          <div class="rel-item">
+            <span class="rel-label">Children</span>
+            <div class="rel-control">
+              <select id="rel_children" class="rel-select" onchange="updateHouseholdQuotas()">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4+</option>
+              </select>
+            </div>
+          </div>
+          <div class="rel-item">
+            <span class="rel-label">Siblings (Brother / Sister)</span>
+            <div class="rel-control">
+              <select id="rel_siblings" class="rel-select" onchange="updateHouseholdQuotas()">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4+</option>
+              </select>
+            </div>
+          </div>
+          <div class="rel-item">
+            <span class="rel-label">Father</span>
+            <div class="rel-control"><input type="checkbox" id="rel_father" onchange="updateHouseholdQuotas()"></div>
+          </div>
+          <div class="rel-item">
+            <span class="rel-label">Mother</span>
+            <div class="rel-control"><input type="checkbox" id="rel_mother" onchange="updateHouseholdQuotas()"></div>
+          </div>
+          <div class="rel-item">
+            <span class="rel-label">Father-in-law</span>
+            <div class="rel-control"><input type="checkbox" id="rel_fil" onchange="updateHouseholdQuotas()"></div>
+          </div>
+          <div class="rel-item">
+            <span class="rel-label">Mother-in-law</span>
+            <div class="rel-control"><input type="checkbox" id="rel_mil" onchange="updateHouseholdQuotas()"></div>
+          </div>
+        </div>
+
+        <div class="quota-summary-box">
+          <span>Defined Family Strength:</span>
+          <span class="quota-val" id="familyQuotaDisplay">1 Member</span>
+        </div>
+
+        <!-- Section 3: Daily Attendance -->
+        <div class="section-title">3. Daily Meal Attendance</div>
+        <p style="font-size: 12px; color: var(--text-muted); margin: 0 0 12px;">
+          Select family and guest attendance for each day.
+        </p>
+
+        <div id="daysWrapper"></div>
+
+        <!-- Section 4: Contribution & Payment QR Section -->
+        <div id="guestPaySection" style="display: none;">
+          <div class="total-pricing-card">
+            <div class="pricing-title">Total Payable Contribution for Food Token</div>
+            <div class="price-value" id="totalPriceTag">₹0</div>
+            <div class="pricing-sub" id="priceBreakdownSub">Includes extra family members over 7 and guest plates</div>
+            
+            <!-- Embedded Payment QR Code -->
+            <div class="payment-qr-wrap">
+              <img src="Payment QR.jpeg" alt="Society UPI Payment QR" class="payment-qr-img" onerror="this.alt='QR Image missing: Payment QR.jpeg'">
+              <div class="qr-scan-hint">📲 Scan & Pay via any UPI App</div>
+            </div>
+          </div>
+
+          <label>List of Guests Attending (comma separated) *</label>
+          <textarea id="guestNames" rows="2" placeholder="e.g., Ayan and Anol on all days, OR Ms. Sharma on Navami, Mr. Gupta on Dashami"></textarea>
+
+          <label>UPI Transaction / UTR Number *</label>
+          <input type="text" id="paymentRef" placeholder="Enter 12-digit UTR from your bank/UPI app">
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-submit">Confirm Registration & Get Pass</button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Floating Menu Popup Modal -->
+  <div id="menuModal" class="modal-backdrop" onclick="closeMenuModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 id="modalDayTitle">Event Day Menu</h3>
+        <button type="button" class="close-btn" onclick="closeMenuModal()" title="Close Menu">✕</button>
+      </div>
+      <div class="modal-body">
+        <img id="modalMenuImg" src="" alt="Menu Card">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // PASTE YOUR GOOGLE APPS SCRIPT /exec URL HERE:
+    const SCRIPT_URL = "YOUR_APPS_SCRIPT_EXEC_URL"; 
+    // ==========================================
+
+    const PUJO_DAYS = [
+      { key: "D1", name: "17-Oct (Maha Saptami - Day 1)", rate: 120, menuImg: "Saptami - day 1.jpeg" },
+      { key: "D2", name: "18-Oct (Maha Saptami - Day 2)", rate: 120, menuImg: "Saptami - day 2.jpeg" },
+      { key: "D3", name: "19-Oct (Maha Ashtami)",         rate: 100, menuImg: "Astami.jpeg" },
+      { key: "D4", name: "20-Oct (Maha Navami)",          rate: 180, menuImg: "Nabami.jpeg" },
+      { key: "D5", name: "21-Oct (Vijaya Dashami)",       rate: 150, menuImg: "Dashami.jpeg" }
+    ];
+
+    let definedFamilyCount = 1; // Starts with Self
+
+    window.addEventListener("DOMContentLoaded", () => {
+      renderDayCards();
+      updateHouseholdQuotas();
+    });
+
+    function updateHouseholdQuotas() {
+      let count = 1; // Self
+      if (document.getElementById("rel_spouse").checked) count += 1;
+      count += parseInt(document.getElementById("rel_children").value, 10);
+      count += parseInt(document.getElementById("rel_siblings").value, 10);
+      if (document.getElementById("rel_father").checked) count += 1;
+      if (document.getElementById("rel_mother").checked) count += 1;
+      if (document.getElementById("rel_fil").checked) count += 1;
+      if (document.getElementById("rel_mil").checked) count += 1;
+
+      definedFamilyCount = count;
+      document.getElementById("familyQuotaDisplay").innerText = `${definedFamilyCount} Member${definedFamilyCount > 1 ? 's' : ''}`;
+
+      rebuildFamilyDropdowns();
+      calculateGrandTotal();
+    }
+
+    function renderDayCards() {
+      const container = document.getElementById("daysWrapper");
+      let html = "";
+
+      PUJO_DAYS.forEach(d => {
+        html += `
+          <div class="day-card">
+            <div class="day-header-row">
+              <div>
+                <div class="day-name">${d.name}</div>
+                <div class="day-rate">Plate Rate: ₹${d.rate}</div>
+                <a class="menu-link" onclick="openMenuModal('${d.menuImg}', '${d.name}')">📜 View Menu</a>
+              </div>
+              <div class="counters-wrapper">
+                <div class="counter-unit">
+                  <span class="fam-tag">Family</span>
+                  <select id="fam_${d.key}" class="pujo-select" onchange="calculateGrandTotal()">
+                    <!-- Rebuilt dynamically -->
+                  </select>
+                </div>
+                <div class="counter-unit">
+                  <span class="guest-tag">Guest</span>
+                  <select id="gst_${d.key}" class="pujo-select" onchange="calculateGrandTotal()">
+                    ${[0,1,2,3,4,5,6,7].map(n => `<option value="${n}">${n}</option>`).join('')}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!-- Itemized Charge Breakdown Per Day -->
+            <div id="info_${d.key}" class="day-charge-info"></div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function rebuildFamilyDropdowns() {
+      PUJO_DAYS.forEach(d => {
+        const select = document.getElementById(`fam_${d.key}`);
+        const currentVal = parseInt(select.value, 10) || definedFamilyCount;
+        
+        let options = "";
+        for (let i = 0; i <= definedFamilyCount; i++) {
+          options += `<option value="${i}">${i}</option>`;
+        }
+        select.innerHTML = options;
+        select.value = Math.min(currentVal, definedFamilyCount);
+      });
+    }
+
+    function calculateGrandTotal() {
+      let grandTotal = 0;
+      let totalChargeableHeadsAcrossAllDays = 0;
+
+      PUJO_DAYS.forEach(d => {
+        const famSelected = parseInt(document.getElementById(`fam_${d.key}`).value, 10) || 0;
+        const gstSelected = parseInt(document.getElementById(`gst_${d.key}`).value, 10) || 0;
+
+        const complimentaryFam = Math.min(famSelected, 7);
+        const chargeableFam = Math.max(0, famSelected - 7);
+        const chargeableGuests = gstSelected;
+        const totalChargeableToday = chargeableFam + chargeableGuests;
+        const dayCost = totalChargeableToday * d.rate;
+
+        grandTotal += dayCost;
+        totalChargeableHeadsAcrossAllDays += totalChargeableToday;
+
+        const infoBox = document.getElementById(`info_${d.key}`);
+
+        if (famSelected === 0 && gstSelected === 0) {
+          infoBox.style.display = "none";
+        } else if (totalChargeableToday > 0) {
+          infoBox.style.display = "block";
+          infoBox.className = "day-charge-info charge-paid";
+          let breakdownParts = [];
+          if (chargeableFam > 0) breakdownParts.push(`${chargeableFam} extra family head`);
+          if (chargeableGuests > 0) breakdownParts.push(`${chargeableGuests} guest${chargeableGuests > 1 ? 's' : ''}`);
+          infoBox.innerHTML = `Chargeable: ${breakdownParts.join(', ')} &bull; <strong>${d.name.split(' ')[0]}'s charge: ₹${dayCost}</strong>`;
+        } else {
+          infoBox.style.display = "block";
+          infoBox.className = "day-charge-info charge-free";
+          infoBox.innerHTML = `✅ All ${famSelected} family member(s) complimentary (₹0)`;
+        }
+      });
+
+      const guestBox = document.getElementById("guestPaySection");
+      const guestNames = document.getElementById("guestNames");
+      const paymentRef = document.getElementById("paymentRef");
+
+      if (grandTotal > 0) {
+        guestBox.style.display = "block";
+        guestNames.required = true;
+        paymentRef.required = true;
+        document.getElementById("totalPriceTag").innerText = `₹${grandTotal.toLocaleString('en-IN')}`;
+      } else {
+        guestBox.style.display = "none";
+        guestNames.required = false;
+        paymentRef.required = false;
+        guestNames.value = "";
+        paymentRef.value = "";
+        document.getElementById("totalPriceTag").innerText = "₹0";
+      }
+    }
+
+    function openMenuModal(imgUrl, dayTitle) {
+      document.getElementById("modalDayTitle").innerText = dayTitle + " Menu";
+      document.getElementById("modalMenuImg").src = imgUrl;
+      const modal = document.getElementById("menuModal");
+      modal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeMenuModal(e) {
+      const modal = document.getElementById("menuModal");
+      modal.style.display = "none";
+      document.getElementById("modalMenuImg").src = "";
+      document.body.style.overflow = "auto";
+    }
+
+    function getRelationSummaryString() {
+      let rels = ["Self"];
+      if (document.getElementById("rel_spouse").checked) rels.push("Spouse");
+      const ch = document.getElementById("rel_children").value;
+      if (ch > 0) rels.push(`${ch} Children`);
+      const sib = document.getElementById("rel_siblings").value;
+      if (sib > 0) rels.push(`${sib} Siblings`);
+      if (document.getElementById("rel_father").checked) rels.push("Father");
+      if (document.getElementById("rel_mother").checked) rels.push("Mother");
+      if (document.getElementById("rel_fil").checked) rels.push("Father-in-law");
+      if (document.getElementById("rel_mil").checked) rels.push("Mother-in-law");
+      return rels.join(", ");
+    }
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById("submitBtn");
+      btn.disabled = true;
+      btn.innerText = "⏳ Recording Details...";
+
+      const payload = {
+        action: "register",
+        headName: document.getElementById("headName").value.trim(),
+        flatNo: document.getElementById("flatNo").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        familyRelations: getRelationSummaryString(),
+        guestNames: document.getElementById("guestNames").value.trim(),
+        paymentRef: document.getElementById("paymentRef").value.trim(),
+        days: {}
+      };
+
+      PUJO_DAYS.forEach(d => {
+        let fam = parseInt(document.getElementById(`fam_${d.key}`).value, 10) || 0;
+        let gst = parseInt(document.getElementById(`gst_${d.key}`).value, 10) || 0;
+        payload.days[d.key] = { family: fam, guests: gst };
+      });
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          document.querySelector(".card").innerHTML = `
+            <div style="text-align: center; padding: 36px 20px;">
+              <div style="font-size: 48px; margin-bottom: 12px;">🪔</div>
+              <h2 style="font-family: 'Cinzel', serif; color: var(--pujo-red); margin: 0 0 10px;">Registration Confirmed!</h2>
+              <p style="font-size: 15px; color: var(--text-dark); margin-bottom: 14px;">
+                Thank you <strong>${payload.headName}</strong> (Flat ${payload.flatNo}). Your details have been submitted successfully.
+              </p>
+              <div style="background: #fdfaf6; border: 1.5px dashed var(--border-accent); border-radius: 12px; padding: 14px; font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                ${payload.paymentRef ? 
+                  "Your contribution reference is under verification by the committee. Your digital QR pass will be emailed shortly." : 
+                  "Your complimentary food pass will be emailed to <strong>" + payload.email + "</strong> shortly."}
+              </div>
+            </div>
+          `;
+        } else {
+          alert("Error: " + data.error);
+          btn.disabled = false;
+          btn.innerText = "Confirm Registration & Get Pass";
+        }
+      })
+      .catch(err => {
+        alert("Network Error: " + err.message);
+        btn.disabled = false;
+        btn.innerText = "Confirm Registration & Get Pass";
+      });
+    }
+  </script>
+</body>
+</html>
