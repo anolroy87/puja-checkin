@@ -1062,6 +1062,25 @@
               </div>
             </div>
           `;
+        } else if (data.duplicate) {
+          // Dedicated Duplicate Flat Alert Screen
+          document.querySelector(".card").innerHTML = `
+            <div style="text-align: center; padding: 32px 18px;">
+              <div style="font-size: 46px; margin-bottom: 10px;">⚠️</div>
+              <h2 style="font-family: 'Cinzel', serif; color: var(--pujo-crimson); margin: 0 0 8px;">Flat Already Registered</h2>
+              <div style="background: #fef2f2; border: 1.5px solid #fecaca; border-radius: 12px; padding: 16px 14px; margin: 16px 0; text-align: left; font-size: 13px; color: #7f1d1d; line-height: 1.6;">
+                <strong>Flat / Unit:</strong> ${data.flatNo}<br>
+                <strong>Registered By:</strong> ${data.familyHead}<br>
+                <strong>Timestamp:</strong> ${data.registeredAt}
+              </div>
+              <p style="font-size: 13px; color: var(--text-dark); margin-bottom: 18px; line-height: 1.5;">
+                A registration has already been submitted for this flat. Multiple registrations for the same flat are not permitted.
+              </p>
+              <div style="background: #fffbeb; border: 1px dashed #f59e0b; border-radius: 8px; padding: 12px; font-size: 12px; color: #92400e; font-weight: 600;">
+                If you need to revise your family strength or meal attendance, please contact the Event Organising Committee directly.
+              </div>
+            </div>
+          `;
         } else {
           alert("Error: " + data.error);
           btn.disabled = false;
