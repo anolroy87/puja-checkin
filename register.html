@@ -657,7 +657,7 @@
   <script>
     // ==========================================
     // PASTE YOUR GOOGLE APPS SCRIPT /exec URL HERE:
-    const SCRIPT_URL = "YOUR_APPS_SCRIPT_EXEC_URL"; 
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDpimD8ThcTlLfP-PzwSGTO1xw6fSoJqlTGhNT8wPKkD3Lszz67C1uELuZQc1I2VNt/exec"; 
     // ==========================================
 
     const PUJO_DAYS = [
@@ -1008,9 +1008,8 @@
       
       const grandTotal = calculateGrandTotal();
       const utrInput = document.getElementById("paymentRef");
-      const utrVal = utrInput.value.trim();
+      const utrVal = utrInput ? utrInput.value.trim() : "";
 
-      // Non-blocking 12-Digit UTR check
       if (grandTotal > 0) {
         if (!/^[A-Za-z0-9]{12}$/.test(utrVal)) {
           showFieldError('paymentRef', true);
@@ -1029,7 +1028,8 @@
         phone: document.getElementById("phone").value.trim(),
         email: document.getElementById("email").value.trim(),
         familyRelations: getRelationSummaryString(),
-        guestNames: document.getElementById("guestNames").value.trim(),
+        guestNames: document.getElementById("guestNames") ? document.getElementById("guestNames").value.trim() : "",
+        totalPayable: grandTotal,
         paymentRef: utrVal,
         days: {}
       };
@@ -1056,7 +1056,7 @@
                 Thank you <strong>${payload.headName}</strong> (Flat ${payload.flatNo}). Your details have been submitted successfully.
               </p>
               <div style="background: #fdfaf6; border: 1.5px dashed var(--border-accent); border-radius: 12px; padding: 14px; font-size: 13px; color: var(--text-muted); line-height: 1.5;">
-                ${payload.paymentRef ? 
+                ${payload.paymentRef && payload.paymentRef !== "COMPLIMENTARY" ? 
                   "Your contribution reference is under verification by the committee. Your digital QR pass will be emailed shortly." : 
                   "Your complimentary food pass will be emailed to <strong>" + payload.email + "</strong> shortly."}
               </div>
