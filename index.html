@@ -3,43 +3,167 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Live Gate QR Scanner</title>
+  <title>Puja Lunch Check-In Desk</title>
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <style>
     * { box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 14px; background: #0b0f19; color: #f8fafc; }
-    .card { background: #1e293b; border-radius: 14px; padding: 16px; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
-    h2 { margin: 0 0 12px; font-size: 18px; color: #38bdf8; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 12px; background: #0b0f19; color: #f8fafc; }
+    .card { background: #1e293b; border-radius: 14px; padding: 14px; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
+    h2 { margin: 0 0 10px; font-size: 18px; color: #38bdf8; }
+    
+    .day-selector-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #0f172a;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      border: 1px solid #334155;
+    }
+    .day-selector-bar label { font-size: 13px; font-weight: 600; color: #94a3b8; }
+    .day-select {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid #475569;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 13px;
+      font-weight: 700;
+      outline: none;
+    }
+
     #reader { width: 100%; border-radius: 12px; overflow: hidden; background: #000; border: 2px solid #334155; }
-    .btn { display: block; width: 100%; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; margin-top: 10px; }
+    .manual-box { display: flex; gap: 8px; margin-top: 10px; }
+    .manual-box input { flex: 1; padding: 12px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; font-size: 16px; text-transform: uppercase; }
+
+    .btn { display: block; width: 100%; padding: 14px; font-size: 15px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; margin-top: 10px; transition: opacity 0.2s; }
+    .btn:active { opacity: 0.8; }
     .btn-green { background: #16a34a; color: white; }
     .btn-blue { background: #2563eb; color: white; }
     .btn-gray { background: #475569; color: white; }
-    .status-overlay { display: none; padding: 16px; border-radius: 10px; margin-top: 14px; }
+
+    .status-overlay { display: none; padding: 14px; border-radius: 12px; margin-top: 12px; }
     .status-success { background: #064e3b; border: 1px solid #059669; color: #d1fae5; }
     .status-error { background: #7f1d1d; border: 1px solid #dc2626; color: #fee2e2; }
-    .details { text-align: left; background: #0f172a; padding: 14px; border-radius: 8px; margin: 10px 0; font-size: 15px; }
-    .details div { margin-bottom: 8px; }
-    .quota-badge { font-size: 22px; font-weight: bold; color: #38bdf8; }
-    .manual-box { display: flex; gap: 8px; margin-top: 12px; }
-    .manual-box input { flex: 1; padding: 12px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; font-size: 16px; text-transform: uppercase; }
 
-    /* Quantity Selector for Partial Check-in */
-    .stepper-container { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 14px 0; }
-    .step-btn { width: 44px; height: 44px; background: #334155; color: white; font-size: 22px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; }
-    .step-input { width: 70px; height: 44px; text-align: center; font-size: 20px; font-weight: bold; background: #0f172a; color: #38bdf8; border: 1px solid #475569; border-radius: 8px; }
+    .details { text-align: left; background: #0f172a; padding: 12px; border-radius: 8px; margin: 10px 0; font-size: 14px; border: 1px solid #334155; }
+    .details div { margin-bottom: 6px; }
+    .details div:last-child { margin-bottom: 0; }
+    .highlight-val { font-weight: 800; color: #38bdf8; }
+
+    /* Admission Controller Card */
+    .admit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .admit-box {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+    .admit-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .fam-color { color: #f87171; }
+    .gst-color { color: #fbbf24; }
+
+    .quota-info {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+    .exhausted-tag {
+      color: #ef4444;
+      font-weight: 700;
+      font-size: 11px;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .stepper-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .step-btn {
+      width: 38px;
+      height: 38px;
+      background: #334155;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+    .step-btn:disabled { background: #1e293b; color: #64748b; cursor: not-allowed; }
+    .step-val {
+      width: 48px;
+      height: 38px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      background: #1e293b;
+      color: #fff;
+      border: 1px solid #475569;
+      border-radius: 6px;
+      line-height: 38px;
+    }
+
+    /* 5-Day Audit Drawer */
+    .audit-toggle {
+      font-size: 12px;
+      color: #38bdf8;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-top: 8px;
+      display: inline-block;
+    }
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin-top: 8px;
+      display: none;
+      background: #090d16;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .audit-table th, .audit-table td { padding: 6px 8px; text-align: left; border-bottom: 1px solid #1e293b; }
+    .audit-table th { background: #1e293b; color: #94a3b8; }
   </style>
 </head>
 <body>
 
   <div class="card">
-    <h2>🍽️ Durga Puja Lunch Check-In</h2>
+    <h2>🍽️ Puja Lunch Check-In Desk</h2>
     
-    <!-- Live Continuous Viewfinder -->
+    <!-- Active Festival Day Selector -->
+    <div class="day-selector-bar">
+      <label>Active Event Day:</label>
+      <select id="daySelect" class="day-select" onchange="onDayChanged()">
+        <option value="D1">17-Oct (Saptami Day 1)</option>
+        <option value="D2">18-Oct (Saptami Day 2)</option>
+        <option value="D3">19-Oct (Maha Ashtami)</option>
+        <option value="D4">20-Oct (Maha Navami)</option>
+        <option value="D5">21-Oct (Vijaya Dashami)</option>
+      </select>
+    </div>
+
+    <!-- Live QR Camera Viewfinder -->
     <div id="reader"></div>
     
     <div class="manual-box">
-      <input type="text" id="manualInput" placeholder="Flat No (e.g. 13E) or Ticket">
+      <input type="text" id="manualInput" placeholder="Flat (e.g. 13B) or Ticket">
       <button class="btn btn-blue" style="width: auto; margin-top: 0; padding: 10px 18px;" onclick="searchManual()">Check</button>
     </div>
   </div>
@@ -48,7 +172,7 @@
 
   <script>
     // ==========================================
-    // PASTE YOUR APPS SCRIPT /exec URL HERE:
+    // PASTE YOUR GOOGLE APPS SCRIPT /exec URL HERE:
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDpimD8ThcTlLfP-PzwSGTO1xw6fSoJqlTGhNT8wPKkD3Lszz67C1uELuZQc1I2VNt/exec"; 
     // ==========================================
 
@@ -56,9 +180,33 @@
     let isProcessing = false;
     let currentTicketData = null;
 
+    let admitFamCount = 0;
+    let admitGstCount = 0;
+
     window.addEventListener("DOMContentLoaded", () => {
+      autoSetToday();
       startContinuousScanner();
     });
+
+    function autoSetToday() {
+      const today = new Date().toISOString().split('T')[0];
+      const mapping = {
+        "2026-10-17": "D1",
+        "2026-10-18": "D2",
+        "2026-10-19": "D3",
+        "2026-10-20": "D4",
+        "2026-10-21": "D5"
+      };
+      if (mapping[today]) {
+        document.getElementById("daySelect").value = mapping[today];
+      }
+    }
+
+    function onDayChanged() {
+      if (currentTicketData) {
+        resumeScanner();
+      }
+    }
 
     function startContinuousScanner() {
       html5QrCode = new Html5Qrcode("reader");
@@ -70,7 +218,7 @@
         onLiveScanSuccess
       ).catch(err => {
         document.getElementById("reader").innerHTML = `
-          <div style="padding: 16px; color: #f87171; font-size: 14px;">
+          <div style="padding: 16px; color: #f87171; font-size: 13px;">
             ⚠️ Camera Access Blocked: ${err.message || err}
           </div>`;
       });
@@ -81,7 +229,10 @@
       isProcessing = true;
       if (navigator.vibrate) navigator.vibrate(100);
       if (html5QrCode && html5QrCode.isScanning) html5QrCode.pause();
-      queryBackend("verify", { query: decodedText.trim() });
+      queryBackend("verify", { 
+        query: decodedText.trim(),
+        dayKey: document.getElementById("daySelect").value
+      });
     }
 
     function searchManual() {
@@ -90,7 +241,10 @@
       if (isProcessing) return;
       isProcessing = true;
       if (html5QrCode && html5QrCode.isScanning) html5QrCode.pause();
-      queryBackend("verify", { query: val });
+      queryBackend("verify", { 
+        query: val,
+        dayKey: document.getElementById("daySelect").value
+      });
     }
 
     function queryBackend(action, payload) {
@@ -122,79 +276,130 @@
       if (!data.found) {
         resBox.className = "status-overlay status-error";
         resBox.innerHTML = `
-          <h3>❌ Not Found</h3>
-          <p>Query: <strong>${data.ticketId}</strong> not found in records.</p>
+          <h3 style="margin: 0 0 4px;">❌ Ticket Not Found</h3>
+          <p style="font-size: 14px;">"${data.ticketId}" does not exist in records.</p>
           <button class="btn btn-gray" onclick="resumeScanner()">Scan Next</button>`;
         return;
       }
 
-      // Check if completely exhausted
-      if (data.alreadyCheckedIn || data.remaining <= 0) {
+      currentTicketData = data;
+      const totalRemainingToday = data.famRemaining + data.gstRemaining;
+      const dayLabel = data.activeDay ? data.activeDay.label : "Today";
+
+      // Case 1: Both Quotas Completely Exhausted for Today
+      if (totalRemainingToday <= 0) {
         resBox.className = "status-overlay status-error";
         resBox.innerHTML = `
-          <h3 style="margin: 0 0 6px;">⛔ ALL SEATS CHECKED IN</h3>
+          <h3 style="margin: 0 0 6px;">⛔ TODAY'S QUOTA EXHAUSTED</h3>
           <div class="details">
-            <div><strong>Flat:</strong> ${data.flatNo}</div>
-            <div><strong>Family Head:</strong> ${data.familyHead}</div>
-            <div><strong>Subscribed:</strong> ${data.totalMembers} Person(s)</div>
-            <div><strong>Already In:</strong> ${data.admittedSoFar} Person(s)</div>
-            <div><strong>Logs:</strong> ${data.checkedInTime || "N/A"}</div>
+            <div><strong>Flat:</strong> ${data.flatNo} (${data.familyHead})</div>
+            <div><strong>Event Day:</strong> ${dayLabel}</div>
+            <div><strong>Family Admitted:</strong> ${data.famChecked} / ${data.famEntitled}</div>
+            <div><strong>Guests Admitted:</strong> ${data.gstChecked} / ${data.gstEntitled}</div>
+            <div><strong>Logs Today:</strong> ${data.timestampsToday || "None"}</div>
           </div>
-          <p style="color: #f87171; font-weight: bold;">No remaining entries allowed on this pass.</p>
+          ${renderAuditTableHtml(data.summary5Days)}
+          <p style="color: #fca5a5; font-size: 12px; margin: 8px 0 0;">All entitled seats for this pass have already been admitted today.</p>
           <button class="btn btn-gray" onclick="resumeScanner()">Scan Next</button>`;
         return;
       }
 
-      // Store ticket context for check-in
-      currentTicketData = data;
+      // Case 2: Available Capacity Remaining - Set Default Stepper Values
+      admitFamCount = data.famRemaining;
+      admitGstCount = data.gstRemaining;
 
       resBox.className = "status-overlay status-success";
       resBox.innerHTML = `
-        <h3 style="margin: 0 0 6px;">✅ VERIFIED ENTRY</h3>
+        <h3 style="margin: 0 0 6px;">✅ VERIFIED PASS</h3>
         <div class="details">
-          <div><strong>Flat Number:</strong> ${data.flatNo}</div>
+          <div><strong>Flat Number:</strong> <span class="highlight-val">${data.flatNo}</span></div>
           <div><strong>Family Head:</strong> ${data.familyHead}</div>
-          <div><strong>Subscribed Heads:</strong> ${data.totalMembers} Person(s)</div>
-          <div><strong>Checked In So Far:</strong> ${data.admittedSoFar} Person(s)</div>
-          <div><strong>Remaining Allowed:</strong> <span class="quota-badge">${data.remaining}</span></div>
+          <div><strong>Day:</strong> ${dayLabel}</div>
         </div>
 
-        <div style="font-weight: bold; margin-top: 10px;">Select number of guests entering now:</div>
-        <div class="stepper-container">
-          <button class="step-btn" onclick="adjustCount(-1)">−</button>
-          <input type="number" id="admitCountInput" class="step-input" value="${data.remaining}" min="1" max="${data.remaining}" readonly>
-          <button class="step-btn" onclick="adjustCount(1)">+</button>
+        <div class="admit-grid">
+          <!-- Family Admission Stepper -->
+          <div class="admit-box">
+            <div class="admit-title fam-color">Family</div>
+            <div class="quota-info">
+              In: ${data.famChecked}/${data.famEntitled} &bull; Rem: <strong>${data.famRemaining}</strong>
+            </div>
+            ${data.famRemaining > 0 ? `
+              <div class="stepper-row">
+                <button class="step-btn" onclick="adjustCount('fam', -1)">−</button>
+                <div id="famVal" class="step-val">${admitFamCount}</div>
+                <button class="step-btn" onclick="adjustCount('fam', 1)">+</button>
+              </div>
+            ` : `<span class="exhausted-tag">⛔ Quota Full</span>`}
+          </div>
+
+          <!-- Guest Admission Stepper -->
+          <div class="admit-box">
+            <div class="admit-title gst-color">Guests</div>
+            <div class="quota-info">
+              In: ${data.gstChecked}/${data.gstEntitled} &bull; Rem: <strong>${data.gstRemaining}</strong>
+            </div>
+            ${data.gstRemaining > 0 ? `
+              <div class="stepper-row">
+                <button class="step-btn" onclick="adjustCount('gst', -1)">−</button>
+                <div id="gstVal" class="step-val">${admitGstCount}</div>
+                <button class="step-btn" onclick="adjustCount('gst', 1)">+</button>
+              </div>
+            ` : `<span class="exhausted-tag">⛔ Quota Full</span>`}
+          </div>
         </div>
 
-        <button class="btn btn-green" id="admitBtn" onclick="submitAdmission()">Admit Guests</button>
+        ${renderAuditTableHtml(data.summary5Days)}
+
+        <button class="btn btn-green" id="confirmAdmitBtn" onclick="submitAdmission()">
+          Admit ${admitFamCount} Family + ${admitGstCount} Guests
+        </button>
         <button class="btn btn-gray" onclick="resumeScanner()">Cancel</button>`;
     }
 
-    function adjustCount(delta) {
-      const input = document.getElementById("admitCountInput");
-      let currentVal = parseInt(input.value, 10) || 1;
-      let newVal = currentVal + delta;
+    function adjustCount(type, delta) {
+      if (type === 'fam') {
+        const nextVal = admitFamCount + delta;
+        if (nextVal >= 0 && nextVal <= currentTicketData.famRemaining) {
+          admitFamCount = nextVal;
+          document.getElementById("famVal").innerText = admitFamCount;
+        }
+      } else if (type === 'gst') {
+        const nextVal = admitGstCount + delta;
+        if (nextVal >= 0 && nextVal <= currentTicketData.gstRemaining) {
+          admitGstCount = nextVal;
+          document.getElementById("gstVal").innerText = admitGstCount;
+        }
+      }
+      updateConfirmBtnText();
+    }
 
-      if (newVal >= 1 && newVal <= currentTicketData.remaining) {
-        input.value = newVal;
+    function updateConfirmBtnText() {
+      const btn = document.getElementById("confirmAdmitBtn");
+      const total = admitFamCount + admitGstCount;
+      if (total === 0) {
+        btn.innerText = "Select at least 1 person";
+        btn.disabled = true;
+      } else {
+        btn.innerText = `Admit ${admitFamCount} Family + ${admitGstCount} Guests`;
+        btn.disabled = false;
       }
     }
 
     function submitAdmission() {
-      const countInput = document.getElementById("admitCountInput");
-      const count = parseInt(countInput.value, 10);
-
-      if (!count || count < 1 || count > currentTicketData.remaining) {
-        alert(`Please select between 1 and ${currentTicketData.remaining} guest(s).`);
+      if (admitFamCount === 0 && admitGstCount === 0) {
+        alert("Please select at least 1 person to admit.");
         return;
       }
 
       const resBox = document.getElementById("resultBox");
-      resBox.innerHTML = `⏳ Admitting ${count} guest(s)...`;
-      
+      resBox.innerHTML = `⏳ Admitting ${admitFamCount} Family + ${admitGstCount} Guests...`;
+
       queryBackend("admit", {
         ticketId: currentTicketData.ticketId,
-        admitCount: count
+        dayKey: document.getElementById("daySelect").value,
+        admitFamily: admitFamCount,
+        admitGuests: admitGstCount
       });
     }
 
@@ -212,20 +417,50 @@
 
       resBox.className = "status-overlay status-success";
       resBox.innerHTML = `
-        <h3>🎉 Admitted Successfully!</h3>
+        <h3 style="margin: 0 0 6px;">🎉 Checked In Successfully!</h3>
         <div class="details">
           <div><strong>Flat:</strong> ${data.flatNo} (${data.familyHead})</div>
-          <div><strong>Admitted Now:</strong> ${data.admittedJustNow} Person(s)</div>
-          <div><strong>Total Admitted:</strong> ${data.newAdmittedTotal} / ${data.totalMembers}</div>
-          <div><strong>Remaining for Later:</strong> <span class="quota-badge">${data.remaining}</span></div>
+          <div><strong>Day:</strong> ${data.dayLabel}</div>
+          <div><strong>Admitted Now:</strong> ${data.admittedFamNow} Family, ${data.admittedGstNow} Guests</div>
+          <div><strong>Total Admitted Today:</strong> ${data.newFamTotal} Fam, ${data.newGstTotal} Gst</div>
+          <div><strong>Remaining for Later:</strong> ${data.famRemaining} Fam, ${data.gstRemaining} Gst</div>
         </div>
-        <button class="btn btn-blue" onclick="resumeScanner()">Scan Next Guest</button>`;
+        <button class="btn btn-blue" onclick="resumeScanner()">Scan Next Entry</button>`;
+    }
+
+    function renderAuditTableHtml(summaryList) {
+      if (!summaryList || summaryList.length === 0) return "";
+      let rows = "";
+      summaryList.forEach(s => {
+        rows += `
+          <tr>
+            <td>${s.day}</td>
+            <td style="color: #f87171;">${s.famChecked}/${s.famEntitled}</td>
+            <td style="color: #fbbf24;">${s.gstChecked}/${s.gstEntitled}</td>
+          </tr>`;
+      });
+
+      return `
+        <span class="audit-toggle" onclick="toggleAuditTable()">📋 View 5-Day Attendance Record</span>
+        <table id="auditTable" class="audit-table">
+          <thead>
+            <tr><th>Day</th><th>Family</th><th>Guests</th></tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+    }
+
+    function toggleAuditTable() {
+      const tbl = document.getElementById("auditTable");
+      tbl.style.display = (tbl.style.display === "table") ? "none" : "table";
     }
 
     function resumeScanner() {
       document.getElementById("resultBox").style.display = "none";
       document.getElementById("manualInput").value = "";
       currentTicketData = null;
+      admitFamCount = 0;
+      admitGstCount = 0;
       isProcessing = false;
       if (html5QrCode) {
         try { html5QrCode.resume(); } catch (e) {}
