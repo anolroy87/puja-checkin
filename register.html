@@ -220,7 +220,7 @@
     .quota-summary-box { background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 9px; padding: 10px 14px; font-size: 13px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
     .quota-val { font-weight: 800; font-size: 15px; color: var(--pujo-red); }
 
-    /* Enhanced Senior-Friendly Stage 3 Header Banner */
+    /* Senior-Friendly Stage 3 Header Banner */
     .stage3-recap-banner {
       background: linear-gradient(135deg, #fffcf7 0%, #fdf5ea 100%);
       border: 1.5px solid #ebd3be;
@@ -332,7 +332,6 @@
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
 
-    /* Soft glowing pulse to draw the eye */
     @keyframes menuPulse {
       0%, 100% {
         box-shadow: 0 2px 6px rgba(234, 88, 12, 0.25);
@@ -597,7 +596,7 @@
             <div class="disclaimer-title">📌 Important Disclaimer</div>
             <ul class="disclaimer-list">
               <li>Feast will be <strong>complimentary for all 5 days</strong> for Family members of each flat (as defined in this form later).</li>
-              <li>All visiting guest's subscription for food will be at <strong>actual per plate cost</strong> from caterer.</li>
+              <li>All visiting guests' subscription for food will be at <strong>actual per plate cost</strong> from caterer.</li>
             </ul>
           </div>
 
@@ -606,7 +605,7 @@
 
           <label>Flat / Unit Number *</label>
           <input type="text" id="flatNo" placeholder="e.g., 13B" maxlength="3" style="text-transform: uppercase;" required>
-          <div id="err_flatNo" class="error-msg">⚠️ Enter a valid Flat Number (e.g., 13B, 4A, max 3 characters).</div>
+          <div id="err_flatNo" class="error-msg">⚠️️ Enter a valid Flat Number (e.g., 13B, 4A, max 3 characters).</div>
 
           <label>Name of Registrant *</label>
           <input type="text" id="headName" placeholder="e.g., Surajit Dutta" oninput="updateSelfNameDisplay()" required>
@@ -619,7 +618,7 @@
           <label>Email Address *</label>
           <p style="font-size: 12px; color: var(--pujo-crimson); font-weight: 600; margin: 2px 0 6px; text-align: center;">Fill carefully, you will receive your coupon here after verification</p>
           <input type="email" id="email" placeholder="name@domain.com" required>
-          <div id="err_email" class="error-msg">⚠️️ Please enter a valid email address (e.g. name@domain.com).</div>
+          <div id="err_email" class="error-msg">⚠️ Please enter a valid email address (e.g. name@domain.com).</div>
 
           <div class="nav-actions">
             <div></div>
@@ -631,7 +630,7 @@
         <div class="stage-section" id="stage2">
           <div class="section-title">Stage 2: Define Family Members</div>
 
-          <!-- Eye-Catching Highlight Banner -->
+          <!-- Highlight Banner -->
           <div class="complimentary-highlight-banner">
             <div class="complimentary-headline">
               <span>Food is complimentary up to</span>
@@ -741,7 +740,7 @@
         <div class="stage-section" id="stage3">
           <div class="section-title">Stage 3: Daily Meal Attendance</div>
           
-          <!-- Redesigned Senior-Friendly Header Section -->
+          <!-- Senior-Friendly Header Section -->
           <div class="stage3-recap-banner">
             <div class="recap-label-title">🌸 Verified Family Composition</div>
             <div class="recap-content-text" id="familySummaryText">Self (1 Member)</div>
@@ -1234,7 +1233,7 @@
       return rels.join(", ");
     }
 
-    function handleFinalSubmit(e) {
+    async function handleFinalSubmit(e) {
       e.preventDefault();
       
       const grandTotal = calculateGrandTotal();
@@ -1272,57 +1271,97 @@
         payload.days[d.key] = { family: fam, guests: gst };
       });
 
-      fetch(SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify(payload)
-      })
-      .then(res => res.json())
-      .then(data => {
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        const rawText = await response.text();
+        let data = null;
+
+        try {
+          data = JSON.parse(rawText);
+        } catch (parseErr) {
+          // If response contains <!DOCTYPE or non-JSON but HTTP status was OK (200),
+          // Google Sheets often executed and saved the row before returning redirect HTML.
+          if (response.ok && (rawText.includes("<!DOCTYPE") || rawText.includes("Google Accounts"))) {
+            data = { success: true, silentRedirect: true };
+          } else {
+            throw new Error("Unable to parse server confirmation. Please check your internet connection.");
+          }
+        }
+
+        // Case A: Successful Registration
         if (data.success) {
           document.querySelector(".card").innerHTML = `
             <div style="text-align: center; padding: 36px 20px;">
-              <div style="font-size: 48px; margin-bottom: 12px;">🪔</div>
-              <h2 style="font-family: 'Cinzel', serif; color: var(--pujo-red); margin: 0 0 10px;">Registration Confirmed!</h2>
-              <p style="font-size: 15px; color: var(--text-dark); margin-bottom: 14px;">
-                Thank you <strong>${payload.headName}</strong> (Flat ${payload.flatNo}). Your details have been submitted successfully.
+              <div style="font-size: 52px; margin-bottom: 12px;">🪔</div>
+              <h2 style="font-family: 'Cinzel', serif; color: var(--pujo-red); margin: 0 0 10px; font-size: 22px;">Registration Confirmed!</h2>
+              <p style="font-size: 15px; color: var(--text-dark); margin-bottom: 16px; line-height: 1.5;">
+                Thank you <strong>${payload.headName}</strong> (Flat <strong>${payload.flatNo}</strong>). Your details have been submitted and saved in the committee records.
               </p>
-              <div style="background: #fdfaf6; border: 1.5px dashed var(--border-accent); border-radius: 12px; padding: 14px; font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+              <div style="background: #fdfaf6; border: 1.5px dashed var(--border-accent); border-radius: 12px; padding: 14px; font-size: 13px; color: #4a2828; line-height: 1.5;">
                 ${payload.paymentRef && payload.paymentRef !== "COMPLIMENTARY" ? 
                   "Your contribution reference is under verification by the committee. Your digital QR pass will be emailed shortly." : 
                   "Your complimentary food pass will be emailed to <strong>" + payload.email + "</strong> shortly."}
               </div>
             </div>
           `;
-        } else if (data.duplicate) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+
+        // Case B: Duplicate Flat Submission Detected
+        if (data.duplicate) {
           document.querySelector(".card").innerHTML = `
             <div style="text-align: center; padding: 32px 18px;">
-              <div style="font-size: 46px; margin-bottom: 10px;">⚠️</div>
-              <h2 style="font-family: 'Cinzel', serif; color: var(--pujo-crimson); margin: 0 0 8px;">Flat Already Registered</h2>
+              <div style="font-size: 48px; margin-bottom: 10px;">📋</div>
+              <h2 style="font-family: 'Cinzel', serif; color: var(--pujo-red); margin: 0 0 8px; font-size: 21px;">Flat Already Registered</h2>
               <div style="background: #fef2f2; border: 1.5px solid #fecaca; border-radius: 12px; padding: 16px 14px; margin: 16px 0; text-align: left; font-size: 13px; color: #7f1d1d; line-height: 1.6;">
                 <strong>Flat / Unit:</strong> ${data.flatNo}<br>
-                <strong>Registered By:</strong> ${data.familyHead}<br>
-                <strong>Timestamp:</strong> ${data.registeredAt}
+                <strong>Registered Under:</strong> ${data.familyHead}<br>
+                <strong>Recorded On:</strong> ${data.registeredAt}
               </div>
-              <p style="font-size: 13px; color: var(--text-dark); margin-bottom: 18px; line-height: 1.5;">
-                A registration has already been submitted for this flat. Multiple registrations for the same flat are not permitted.
+              <p style="font-size: 13px; color: var(--text-dark); margin-bottom: 16px; line-height: 1.5;">
+                Your registration is already securely recorded in the system. Each flat is registered once.
               </p>
-              <div style="background: #fffbeb; border: 1px dashed #f59e0b; border-radius: 8px; padding: 12px; font-size: 12px; color: #92400e; font-weight: 600;">
-                If you need to revise your family strength or meal attendance, please contact the Event Organising Committee directly.
+              <div style="background: #fffbeb; border: 1px dashed #f59e0b; border-radius: 10px; padding: 12px; font-size: 12px; color: #92400e; font-weight: 600; line-height: 1.4;">
+                If you just submitted and received an earlier screen pause, your entry was already saved successfully! If you need to revise plates or members, please contact the Event Organising Committee directly.
               </div>
             </div>
           `;
-        } else {
-          alert("Error: " + data.error);
-          btn.disabled = false;
-          btn.innerText = "Submit and Get Pass";
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
         }
-      })
-      .catch(err => {
-        alert("Network Error: " + err.message);
+
+        // Case C: Explicit Server Business Error
+        showSubmissionError(data.error || "Unable to complete submission. Please try again.");
+
+      } catch (networkError) {
+        showSubmissionError(
+          "We could not reach the server to verify your submission. Please tap below to retry without losing your filled information."
+        );
+      } finally {
         btn.disabled = false;
         btn.innerText = "Submit and Get Pass";
-      });
+      }
+    }
+
+    // Non-destructive inline error banner on Stage 4
+    function showSubmissionError(message) {
+      let errBox = document.getElementById("submissionErrorBanner");
+      if (!errBox) {
+        errBox = document.createElement("div");
+        errBox.id = "submissionErrorBanner";
+        errBox.style.cssText = "background: #fef2f2; border: 1.5px solid #f87171; border-radius: 10px; padding: 12px 14px; margin: 12px 0; font-size: 13px; color: #991b1b; line-height: 1.45; text-align: center;";
+        const btnRow = document.querySelector("#stage4 .nav-actions");
+        btnRow.parentNode.insertBefore(errBox, btnRow);
+      }
+      errBox.style.display = "block";
+      errBox.innerHTML = `<strong>⚠️ Submission Notice:</strong><br>${message}`;
+      errBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   </script>
 </body>
