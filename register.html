@@ -6,7 +6,7 @@
   <title>Durga Puja Lunch Registration 2026 | Orchard Avaasa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -110,7 +110,7 @@
     .stage-section.active { display: block; animation: fadeIn 0.25s ease-out; }
 
     .section-title { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--pujo-crimson); margin: 0 0 8px; display: flex; align-items: center; gap: 6px; }
-    .section-desc { font-size: 14px; color: var(--text-muted); margin: 0 0 14px; line-height: 1.4; }
+    .section-desc { font-size: 13px; color: var(--text-muted); margin: 0 0 14px; line-height: 1.4; }
 
     /* Highlighted Disclaimer Box */
     .disclaimer-box {
@@ -161,6 +161,54 @@
       margin: -10px 0 10px 2px;
     }
 
+    /* Prominent Complimentary Announcement Banner */
+    .complimentary-highlight-banner {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border: 1.5px solid #f59e0b;
+      border-left: 5px solid var(--pujo-crimson);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      box-shadow: 0 3px 8px rgba(217, 119, 6, 0.12);
+      text-align: center;
+    }
+
+    .complimentary-headline {
+      font-size: 16px;
+      font-weight: 800;
+      color: #78350f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 5px;
+      line-height: 1.35;
+    }
+
+    .complimentary-number-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      font-weight: 900;
+      color: #ffffff;
+      background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
+      border: 1.5px solid #7f1d1d;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(185, 28, 28, 0.35);
+      margin: 0 2px;
+    }
+
+    .complimentary-subline {
+      font-size: 12px;
+      font-weight: 600;
+      color: #92400e;
+      margin-top: 5px;
+      line-height: 1.4;
+    }
+
     /* Relation Checklist Matrix */
     .relation-grid { background: #fdfaf6; border: 1.5px solid var(--border-soft); border-radius: 12px; padding: 10px 12px; margin-bottom: 14px; }
     .rel-item { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid #f2e7d8; }
@@ -172,21 +220,76 @@
     .quota-summary-box { background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 9px; padding: 10px 14px; font-size: 13px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
     .quota-val { font-weight: 800; font-size: 15px; color: var(--pujo-red); }
 
-    .family-recap-card {
-      background: #fdf6ec;
-      border: 1px dashed var(--border-accent);
-      border-radius: 9px;
-      padding: 10px 12px;
+    /* Enhanced Senior-Friendly Stage 3 Header Banner */
+    .stage3-recap-banner {
+      background: linear-gradient(135deg, #fffcf7 0%, #fdf5ea 100%);
+      border: 1.5px solid #ebd3be;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 5px rgba(139, 0, 0, 0.04);
+    }
+    .recap-label-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #92400e;
+      margin-bottom: 3px;
+    }
+    .recap-content-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #3b1414;
+      line-height: 1.45;
+    }
+
+    .advisory-pill {
+      background: #fef2f2;
+      border: 1px dashed #f87171;
+      border-radius: 8px;
+      padding: 8px 12px;
       font-size: 12px;
+      font-weight: 600;
+      color: #991b1b;
       margin-bottom: 14px;
-      color: #633215;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1.4;
     }
 
     /* Day Card */
     .day-card { background: #fdfaf6; border: 1.5px solid #f2e7d8; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
     .day-header-row { display: flex; align-items: center; justify-content: space-between; }
     .day-name { font-weight: 700; font-size: 13px; color: #4a1515; }
-    .day-rate { font-size: 11px; color: var(--pujo-gold); font-weight: 600; }
+
+    /* Base label style (muted warm amber/brown) */
+    .day-rate {
+      font-size: 11px;
+      font-weight: 600;
+      color: #854d0e;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 3px;
+      margin-bottom: 4px;
+    }
+
+    /* Highlighted subtle badge for the ₹ value */
+    .rate-value {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 800;
+      color: #991b1b;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      padding: 1px 7px;
+      border-radius: 6px;
+      letter-spacing: 0.2px;
+      box-shadow: 0 1px 2px rgba(185, 28, 28, 0.06);
+    }
+    
     .counters-wrapper { display: flex; gap: 8px; }
     .counter-unit { text-align: center; }
     .counter-unit span { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-bottom: 3px; }
@@ -195,18 +298,49 @@
 
     .pujo-select { width: 56px; height: 36px; padding: 3px 5px; background: #ffffff; border: 1.5px solid #d9c4b0; border-radius: 7px; font-size: 14px; font-weight: 700; color: #3b1b1b; cursor: pointer; }
 
+    /* High-Visibility Interactive Menu Badge */
     .menu-link {
-      display: inline-block;
-      margin-top: 4px;
-      font-size: 11px;
-      font-weight: 700;
-      color: #991b1b;
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      padding: 3px 8px;
-      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 6px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #7f1d1d;
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+      border: 1.5px solid #ea580c;
+      border-radius: 20px;
       text-decoration: none;
       cursor: pointer;
+      box-shadow: 0 2px 6px rgba(234, 88, 12, 0.25);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      letter-spacing: 0.3px;
+      animation: menuPulse 2.5s infinite ease-in-out;
+    }
+
+    .menu-link:hover {
+      background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);
+      border-color: #c2410c;
+      color: #991b1b;
+      box-shadow: 0 4px 10px rgba(194, 65, 12, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .menu-link:active {
+      transform: scale(0.96);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Soft glowing pulse to draw the eye */
+    @keyframes menuPulse {
+      0%, 100% {
+        box-shadow: 0 2px 6px rgba(234, 88, 12, 0.25);
+      }
+      50% {
+        box-shadow: 0 2px 12px rgba(234, 88, 12, 0.55);
+        border-color: #c2410c;
+      }
     }
 
     .day-charge-info {
@@ -260,6 +394,42 @@
       background: #fee2e2;
       border: 1px solid #fecaca;
       color: #991b1b;
+    }
+
+    /* Eye-Catching Stage 4 Payment Pause Card */
+    .payment-pause-card {
+      background: #fff1f2;
+      border: 2px solid #e11d48;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 16px 0 12px;
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.12);
+      text-align: center;
+      animation: pulseAttention 2s infinite ease-in-out;
+    }
+    .pause-badge-title {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      background: #e11d48;
+      color: #ffffff;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-bottom: 6px;
+    }
+    .pause-text-bold {
+      font-size: 15px;
+      font-weight: 800;
+      color: #881337;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    @keyframes pulseAttention {
+      0%, 100% { border-color: #e11d48; }
+      50% { border-color: #be123c; box-shadow: 0 4px 16px rgba(225, 29, 72, 0.22); }
     }
 
     .total-pricing-card { 
@@ -321,6 +491,7 @@
       color: #fff;
       flex: 1;
       box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+      font-size: 16px;
     }
     .btn-nav:disabled { background: #c7b9ab; color: #fff; cursor: not-allowed; box-shadow: none; }
 
@@ -448,7 +619,7 @@
           <label>Email Address *</label>
           <p style="font-size: 12px; color: var(--pujo-crimson); font-weight: 600; margin: 2px 0 6px; text-align: center;">Fill carefully, you will receive your coupon here after verification</p>
           <input type="email" id="email" placeholder="name@domain.com" required>
-          <div id="err_email" class="error-msg">⚠️ Please enter a valid email address (e.g. name@domain.com).</div>
+          <div id="err_email" class="error-msg">⚠️️ Please enter a valid email address (e.g. name@domain.com).</div>
 
           <div class="nav-actions">
             <div></div>
@@ -459,10 +630,18 @@
         <!-- STAGE 2: DEFINE FAMILY -->
         <div class="stage-section" id="stage2">
           <div class="section-title">Stage 2: Define Family Members</div>
-          <p class="section-desc">
-            <strong style="color: var(--pujo-crimson);">Food is complimentary up to 7 members</strong><br>
-            additional members are chargeable at actual plate rates.
-          </p>
+
+          <!-- Eye-Catching Highlight Banner -->
+          <div class="complimentary-highlight-banner">
+            <div class="complimentary-headline">
+              <span>Food is complimentary up to</span>
+              <span class="complimentary-number-badge">6</span>
+              <span>family members</span>
+            </div>
+            <div class="complimentary-subline">
+              Additional members beyond 6 are chargeable at actual plate rates.
+            </div>
+          </div>
 
           <div class="relation-grid">
             <div class="rel-item">
@@ -562,22 +741,28 @@
         <div class="stage-section" id="stage3">
           <div class="section-title">Stage 3: Daily Meal Attendance</div>
           
-          <div class="family-recap-card">
-            <strong>Family Composition Defined:</strong>
-            <div id="familySummaryText" style="margin-top: 3px;">Self (1 Member)</div>
+          <!-- Redesigned Senior-Friendly Header Section -->
+          <div class="stage3-recap-banner">
+            <div class="recap-label-title">🌸 Verified Family Composition</div>
+            <div class="recap-content-text" id="familySummaryText">Self (1 Member)</div>
           </div>
 
-          <div style="font-size: 12px; color: var(--pujo-crimson); font-weight: 600; margin: 8px 0 10px; text-align: center;">
-            If you have more than 7 visiting guests on any day, please contact the committee to discuss that.
+          <div class="advisory-pill">
+            <span>ℹ️</span>
+            <span>If you plan to host more than 7 visiting guests on any day, please contact the committee directly.</span>
           </div>
 
-          <p class="section-desc">Select attending headcounts for each day. Tap "View Menu" to check daily dishes.</p>
+          <p class="section-desc" style="font-weight: 500;">
+            Select attending headcount for each day. Tap <strong>"View Menu"</strong> to check the daily dishes.
+          </p>
 
           <div id="daysWrapper"></div>
 
+          <!-- Mandatory only if guests are added -->
           <div style="margin-top: 14px;">
-            <label>List of Guests Attending (comma separated)</label>
-            <textarea id="guestNames" rows="2" placeholder="e.g., Ayan and Anol on Ashtami, Mrs. Sengupta on Navami"></textarea>
+            <label id="guestNamesLabel">List of Guests Attending (comma separated)</label>
+            <textarea id="guestNames" rows="2" placeholder="e.g., Mr. & Mrs. Roy on Ashtami, 2 Cousins on Navami"></textarea>
+            <div id="err_guestNames" class="error-msg">⚠️ Please specify the names of the visiting guests since guest plates are selected.</div>
           </div>
 
           <div class="nav-actions">
@@ -606,6 +791,14 @@
             </div>
           </div>
 
+          <!-- Highlighted Pause & Payment Notice (Appears only if amount > 0) -->
+          <div id="paymentPauseBox" class="payment-pause-card" style="display: none;">
+            <div class="pause-badge-title">⏸️ Action Required Before Submitting</div>
+            <p class="pause-text-bold">
+              Please take a Pause, and make the payment to get the 12-digit UPI transaction ID needed for submitting.
+            </p>
+          </div>
+
           <!-- Total Contribution Section -->
           <div class="total-pricing-card">
             <div class="pricing-title">Total Payable Contribution for Food Token</div>
@@ -632,7 +825,7 @@
 
           <div class="nav-actions">
             <button type="button" class="btn-nav btn-back" onclick="goToStage(3)">⬅ Back</button>
-            <button type="submit" id="submitBtn" class="btn-nav btn-submit">Confirm Registration & Get Pass</button>
+            <button type="submit" id="submitBtn" class="btn-nav btn-submit">Submit and Get Pass</button>
           </div>
         </div>
 
@@ -660,12 +853,14 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDpimD8ThcTlLfP-PzwSGTO1xw6fSoJqlTGhNT8wPKkD3Lszz67C1uELuZQc1I2VNt/exec"; 
     // ==========================================
 
+    const COMPLIMENTARY_CAP = 6; // Family complimentary up to 6 members
+
     const PUJO_DAYS = [
-      { key: "D1", name: "17-Oct (Maha Saptami - Day 1)", rate: 120, menuImg: "Saptami - day 1.jpeg" },
-      { key: "D2", name: "18-Oct (Maha Saptami - Day 2)", rate: 120, menuImg: "Saptami - day 2.jpeg" },
-      { key: "D3", name: "19-Oct (Maha Ashtami)",         rate: 100, menuImg: "Astami.jpeg" },
-      { key: "D4", name: "20-Oct (Maha Navami)",          rate: 180, menuImg: "Nabami.jpeg" },
-      { key: "D5", name: "21-Oct (Vijaya Dashami)",       rate: 150, menuImg: "Dashami.jpeg" }
+      { key: "D1", name: "17-Oct (Maha Saptami - Day 1)", rate: 250, menuImg: "Saptami - day 1.jpeg" },
+      { key: "D2", name: "18-Oct (Maha Saptami - Day 2)", rate: 280, menuImg: "Saptami - day 2.jpeg" },
+      { key: "D3", name: "19-Oct (Maha Ashtami)",         rate: 210, menuImg: "Astami.jpeg" },
+      { key: "D4", name: "20-Oct (Maha Navami)",          rate: 400, menuImg: "Nabami.jpeg" },
+      { key: "D5", name: "21-Oct (Vijaya Dashami)",       rate: 280, menuImg: "Dashami.jpeg" }
     ];
 
     let currentStage = 1;
@@ -677,7 +872,7 @@
     });
 
     function clearErrors() {
-      ['flatNo', 'headName', 'phone', 'email', 'paymentRef'].forEach(id => {
+      ['flatNo', 'headName', 'phone', 'email', 'guestNames', 'paymentRef'].forEach(id => {
         const input = document.getElementById(id);
         const err = document.getElementById(`err_${id}`);
         if (input) input.classList.remove('field-error');
@@ -694,7 +889,7 @@
     }
 
     // Real-time error removal when user starts typing
-    ['flatNo', 'headName', 'phone', 'email', 'paymentRef'].forEach(id => {
+    ['flatNo', 'headName', 'phone', 'email', 'guestNames', 'paymentRef'].forEach(id => {
       const el = document.getElementById(id);
       if (el) {
         el.addEventListener('input', () => {
@@ -752,12 +947,26 @@
       }
 
       if (stageNum === 3) {
-        document.getElementById("familySummaryText").innerText = getRelationSummaryString() + ` (${definedFamilyCount} Members)`;
-        // Rebuild & ensure default to definedFamilyCount
+        document.getElementById("familySummaryText").innerHTML = `<strong>${getRelationSummaryString()}</strong> &bull; <span style="color: var(--pujo-red); font-weight: 700;">${definedFamilyCount} Member${definedFamilyCount > 1 ? 's' : ''}</span>`;
         rebuildFamilyDropdowns();
       }
 
-      if (stageNum === 4) {
+      if (stageNum === 4 && currentStage === 3) {
+        clearErrors();
+        // Mandatory check for Guest Names if any guest is selected
+        let totalGuestsSelected = 0;
+        PUJO_DAYS.forEach(d => {
+          totalGuestsSelected += (parseInt(document.getElementById(`gst_${d.key}`).value, 10) || 0);
+        });
+
+        if (totalGuestsSelected > 0) {
+          const guestNamesVal = document.getElementById("guestNames").value.trim();
+          if (guestNamesVal.length < 2) {
+            showFieldError('guestNames', true);
+            return;
+          }
+        }
+
         populateSummaryStage();
       }
 
@@ -810,8 +1019,11 @@
             <div class="day-header-row">
               <div>
                 <div class="day-name">${d.name}</div>
-                <div class="day-rate">Plate Rate: ₹${d.rate}</div>
-                <a class="menu-link" onclick="openMenuModal('${d.menuImg}', '${d.name}')">📜 View Menu</a>
+                <div class="day-rate">Per Plate Rate: <span class="rate-value">₹${d.rate}</span></div>
+                <a class="menu-link" onclick="openMenuModal('${d.menuImg}', '${d.name}')">
+                  <span>📜 View Menu</span>
+                  <span style="font-size: 10px; opacity: 0.8;">➔</span>
+                </a>
               </div>
               <div class="counters-wrapper">
                 <div class="counter-unit">
@@ -853,6 +1065,7 @@
 
     function calculateGrandTotal() {
       let grandTotal = 0;
+      let totalGuestsSelected = 0;
 
       PUJO_DAYS.forEach(d => {
         const famEl = document.getElementById(`fam_${d.key}`);
@@ -861,9 +1074,11 @@
 
         const famSelected = parseInt(famEl.value, 10) || 0;
         const gstSelected = parseInt(gstEl.value, 10) || 0;
+        totalGuestsSelected += gstSelected;
 
-        const complimentaryFam = Math.min(famSelected, 7);
-        const chargeableFam = Math.max(0, famSelected - 7);
+        // Up to 6 family members are complimentary; beyond 6 is chargeable
+        const complimentaryFam = Math.min(famSelected, COMPLIMENTARY_CAP);
+        const chargeableFam = Math.max(0, famSelected - COMPLIMENTARY_CAP);
         const chargeableGuests = gstSelected;
         const totalChargeableToday = chargeableFam + chargeableGuests;
         const dayCost = totalChargeableToday * d.rate;
@@ -887,6 +1102,19 @@
         }
       });
 
+      // Update Guest Label styling (Mandatory indicator)
+      const guestLabel = document.getElementById("guestNamesLabel");
+      if (guestLabel) {
+        if (totalGuestsSelected > 0) {
+          guestLabel.innerHTML = `List of Guests Attending (comma separated) <span style="color: var(--pujo-crimson); font-weight: 700;">* Required</span>`;
+        } else {
+          guestLabel.innerHTML = `List of Guests Attending (comma separated) <span style="color: var(--text-muted); font-size: 11px;">(Optional)</span>`;
+          const errBox = document.getElementById("err_guestNames");
+          if (errBox) errBox.style.display = "none";
+          document.getElementById("guestNames").classList.remove("field-error");
+        }
+      }
+
       return grandTotal;
     }
 
@@ -905,7 +1133,7 @@
         return displayName;
       }
 
-      // 1. Day-wise Family Breakdown with Highlighted Count Pill
+      // 1. Day-wise Family Breakdown
       const familyBreakdown = [];
       PUJO_DAYS.forEach(d => {
         const famCount = parseInt(document.getElementById(`fam_${d.key}`).value, 10) || 0;
@@ -924,7 +1152,7 @@
         sumFamilyEl.innerHTML = `<span style="color: var(--pujo-red); font-weight: 800;">${definedFamilyCount} Defined</span><div style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">0 Attending</div>`;
       }
 
-      // 2. Day-wise Guest Breakdown with Highlighted Count Pill
+      // 2. Day-wise Guest Breakdown
       let totalGuests = 0;
       const guestBreakdown = [];
       PUJO_DAYS.forEach(d => {
@@ -945,20 +1173,23 @@
         sumGuestEl.innerText = "None";
       }
 
-      // 3. Price & UTR Logic
+      // 3. Price, Payment Pause Banner & UTR Logic
       const priceTag = document.getElementById("totalPriceTag");
       const qrBox = document.getElementById("paymentQrBox");
       const utrSection = document.getElementById("utrSection");
+      const pauseBox = document.getElementById("paymentPauseBox");
       const paymentRefInput = document.getElementById("paymentRef");
 
       priceTag.innerText = `₹${grandTotal.toLocaleString('en-IN')}`;
 
       if (grandTotal > 0) {
+        pauseBox.style.display = "block";
         qrBox.style.display = "block";
         utrSection.style.display = "block";
         paymentRefInput.required = true;
-        document.getElementById("priceBreakdownSub").innerText = "Scan the QR code to pay the guest contribution amount.";
+        document.getElementById("priceBreakdownSub").innerText = "Scan the QR code to pay the guest/extra plate contribution.";
       } else {
+        pauseBox.style.display = "none";
         qrBox.style.display = "none";
         utrSection.style.display = "none";
         paymentRefInput.required = false;
@@ -1010,6 +1241,7 @@
       const utrInput = document.getElementById("paymentRef");
       const utrVal = utrInput ? utrInput.value.trim() : "";
 
+      // Non-blocking 12-Digit UTR check if payment is applicable
       if (grandTotal > 0) {
         if (!/^[A-Za-z0-9]{12}$/.test(utrVal)) {
           showFieldError('paymentRef', true);
@@ -1063,7 +1295,6 @@
             </div>
           `;
         } else if (data.duplicate) {
-          // Dedicated Duplicate Flat Alert Screen
           document.querySelector(".card").innerHTML = `
             <div style="text-align: center; padding: 32px 18px;">
               <div style="font-size: 46px; margin-bottom: 10px;">⚠️</div>
@@ -1084,13 +1315,13 @@
         } else {
           alert("Error: " + data.error);
           btn.disabled = false;
-          btn.innerText = "Confirm Registration & Get Pass";
+          btn.innerText = "Submit and Get Pass";
         }
       })
       .catch(err => {
         alert("Network Error: " + err.message);
         btn.disabled = false;
-        btn.innerText = "Confirm Registration & Get Pass";
+        btn.innerText = "Submit and Get Pass";
       });
     }
   </script>
