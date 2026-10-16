@@ -189,7 +189,13 @@
     });
 
     function autoSetToday() {
-      const today = new Date().toISOString().split('T')[0];
+      // Formats date into YYYY-MM-DD using local browser/device timezone (NOT UTC)
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const localDateStr = `${year}-${month}-${day}`;
+
       const mapping = {
         "2026-10-17": "D1",
         "2026-10-18": "D2",
@@ -197,8 +203,12 @@
         "2026-10-20": "D4",
         "2026-10-21": "D5"
       };
-      if (mapping[today]) {
-        document.getElementById("daySelect").value = mapping[today];
+
+      if (mapping[localDateStr]) {
+        document.getElementById("daySelect").value = mapping[localDateStr];
+      } else {
+        // If testing on any date before 17-Oct, default to Saptami Day 1
+        document.getElementById("daySelect").value = "D1";
       }
     }
 
